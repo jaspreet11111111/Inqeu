@@ -1,0 +1,16 @@
+.map-wrap {
+  position: absolute;
+  right: 0px;
+  background-color: rgba(2, 253, 216, 0.1);
+  float: right;
+  width: 30%;
+  height: 40%;
+
+}
+
+.leaflet-container {
+  width: 100%;
+  position: absolute;
+  opacity: 0;
+
+}

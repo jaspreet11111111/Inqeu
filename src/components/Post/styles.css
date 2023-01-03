@@ -1,0 +1,50 @@
+.post_container {
+  padding: 3em;
+}
+
+.posts_grid {
+  justify-content: space-between;
+}
+
+.postTopics_container {
+  text-align: center;
+  border-radius: 1em;
+  border: 1px solid #e5c3fa;
+}
+
+.postTopic_listItem {
+  border: 1px solid lightgray;
+  width: 100%;
+  height: 40px;
+  color: gray;
+}
+
+.postContainer {
+  padding: 1em;
+  border-radius: 1em;
+}
+
+.postProfile_contaier {
+  border-radius: 1em;
+}
+
+.profileInfo_container {
+  border-radius: 1em;
+  padding: 10px;
+  border: 1px solid #e5c3fa;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+}
+
+.profilePost {
+  margin-top: 5px;
+  margin-bottom: 2em;
+  border: 1px solid #e5c3fa;
+  border-radius: 1em;
+  padding: 1em;
+}
