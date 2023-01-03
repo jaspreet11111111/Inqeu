@@ -64,28 +64,28 @@ const Navbar = () => {
           lg: 'none'
         }
       }} spacing={5} className="navbar_links" alignItems="center">
-        <Typography variant='p' fontWeight="700" >
+        <Typography variant='p' fontWeight="500" >
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')} >
             Home
           </NavLink>
         </Typography>
-        <Typography variant='p' fontWeight="700" >
+        <Typography variant='p' fontWeight="500" >
           <NavLink to="/about" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
             About
           </NavLink>
         </Typography>
-        <Typography variant='p' fontWeight="700">
+        <Typography variant='p' fontWeight="500">
           <NavLink to="/post" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
             Post
           </NavLink>
         </Typography>
-        <Typography variant='p' fontWeight="700" >
+        <Typography variant='p' fontWeight="500" >
           <NavLink to="/ask" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
             Ask/Share
           </NavLink>
         </Typography>
         <Search activeMenu={activeMenu} />
-        <Typography variant='p' fontWeight="700">
+        <Typography variant='p' fontWeight="500">
           <NavLink to="/signin" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
             Sign In
           </NavLink>
@@ -100,33 +100,28 @@ const Navbar = () => {
       }}>
         <Paper className='navbar_desktop'>
           <Stack direction='row' spacing={5} className="navbar_links" alignItems="center">
-            <Typography variant='p' fontWeight="700">
+            <Typography variant='p' fontWeight="500">
               <NavLink to="/" className='logo_link'>
                 Ique
               </NavLink>
             </Typography>
-            <Typography variant='p' fontWeight="700" >
+            <Typography variant='p' fontWeight="500" >
               <NavLink to="/" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
                 Home
               </NavLink>
             </Typography>
-            <Typography variant='p' fontWeight="700" >
+            <Typography variant='p' fontWeight="500" >
               <NavLink to="/about" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
                 About
               </NavLink>
             </Typography>
-            <Typography variant='p' fontWeight="700">
+            <Typography variant='p' fontWeight="500">
               <NavLink to="/post" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
                 Post
               </NavLink>
             </Typography>
-            <Typography variant='p' fontWeight="700" >
-              <NavLink to="/ask" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
-                Ask/Share
-              </NavLink>
-            </Typography>
             <Search activeMenu={activeMenu} />
-            <Typography variant='p' fontWeight="700">
+            <Typography variant='p' fontWeight="500">
               <NavLink to="/signin" className={({ isActive }) => (isActive ? 'active_link' : 'nav_link')}>
                 Sign In
               </NavLink>

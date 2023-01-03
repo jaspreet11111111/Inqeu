@@ -10,13 +10,13 @@ const Getapp = () => {
                     xs: '1.5em',
                     sm: '1em',
                     md: '3em',
-                    lg: '5em'
+                    lg: '6em'
                 }
             }}>
             <Grid item xs={12} md={5} lg={5}>
                 <Stack spacing={3}>
                     <Stack className='app_desc' spacing={3}>
-                        <Typography variant='h3' fontWeight='700' color='#414141'>
+                        <Typography variant='p' fontWeight='700' color='#414141' fontSize='42px'>
                             Get Started with Inque App
                         </Typography>
                         <Typography variant='p'>
@@ -27,7 +27,7 @@ const Getapp = () => {
                         <Button variant='contained' sx={{
                             width: "50%",
                             backgroundColor: "#694ed6",
-                            borderRadius: "3em",
+                            borderRadius: "10px",
                             textTransform: 'initial'
                         }}>
                             Download now

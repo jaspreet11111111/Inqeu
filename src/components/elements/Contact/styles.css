@@ -14,3 +14,13 @@
   opacity: 0;
 
 }
+
+.textArea_input {
+  border: none;
+  width: 100%;
+  font-family: sans-serif;
+  padding: 24px 4.5px;
+  height: 160px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+}

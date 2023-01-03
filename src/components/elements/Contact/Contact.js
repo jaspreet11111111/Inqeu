@@ -8,9 +8,24 @@ import SortIcon from '@mui/icons-material/Sort';
 import "./styles.css"
 const Contact = () => {
   return (
-    <Grid container sx={{ backgroundColor: "#eeddff", padding: "3em" }}>
+    <Grid container sx={{
+      backgroundColor: "#eeddff", padding: {
+        xs: '1em',
+        sm: '1em',
+        md: '2em',
+        lg: '3em'
+      }
+    }}>
       <Grid item xs={12} md={6} lg={6}>
-        <Stack spacing={2} alignItems="center"
+        <Typography
+          variant='h3'
+          fontWeight="700"
+          color="#414141"
+          textAlign='center'
+          paddingTop='1em'>
+          Query
+        </Typography>
+        <Stack spacing='8px' alignItems="center"
           sx={{
             padding: {
               xs: '0',
@@ -19,9 +34,6 @@ const Contact = () => {
               lg: '3em'
             }
           }}>
-          <Typography variant='h3' fontWeight="700" color="#414141">
-            Query
-          </Typography>
           <Stack
             bgcolor="#ffff"
             alignItems="center"
@@ -33,13 +45,14 @@ const Contact = () => {
                 sm: '100%',
                 md: '80%',
                 lg: '80%'
-              }
+              },
+              height: '48px',
+              borderRadius: '4px'
             }}>
-            <Button sx={{
+            <PersonIcon sx={{
               color: '#694ed6',
-            }}>
-              <PersonIcon />
-            </Button>
+              padding: '12px 20px'
+            }} />
             <InputBase placeholder='Enter Your Name' fullWidth />
           </Stack>
           <Stack
@@ -52,13 +65,14 @@ const Contact = () => {
                 sm: '100%',
                 md: '80%',
                 lg: '80%'
-              }
+              },
+              height: '48px',
+              borderRadius: '4px'
             }}>
-            <Button sx={{
-              color: '#694ed6'
-            }}>
-              <MailIcon />
-            </Button>
+            <MailIcon sx={{
+              color: '#694ed6',
+              padding: '12px 20px'
+            }} />
             <InputBase placeholder='Enter your Mail' fullWidth />
           </Stack>
           <Stack
@@ -72,13 +86,15 @@ const Contact = () => {
                 sm: '100%',
                 md: '80%',
                 lg: '80%'
-              }
+              },
+              height: '48px',
+              borderRadius: '4px'
             }}>
-            <Button sx={{
-              color: '#694ed6'
-            }}>
-              <PhoneIphoneIcon />
-            </Button>
+            <PhoneIphoneIcon
+              sx={{
+                color: '#694ed6',
+                padding: '12px 20px'
+              }} />
             <InputBase placeholder='Enter your Phone number' type='number' fullWidth />
           </Stack>
           <Stack
@@ -92,19 +108,17 @@ const Contact = () => {
                 sm: '100%',
                 md: '80%',
                 lg: '80%'
-              }
+              },
+              borderRadius: '4px'
             }}>
-            <Button sx={{
-              color: '#694ed6'
-            }}>
-              <SortIcon />
-            </Button>
-            <InputBase placeholder='Enter your message' fullWidth />
+            <SortIcon sx={{ color: '#694ed6', margin: '20.5px 18.5px' }} />
+            <textarea placeholder='Enter your message' className='textArea_input'>
+            </textarea>
           </Stack>
           <Button variant='contained' sx={{
             width: "80%",
             backgroundColor: "#694ed6",
-            borderRadius: "3em"
+            borderRadius: "10px"
           }}>
             Submit
           </Button>

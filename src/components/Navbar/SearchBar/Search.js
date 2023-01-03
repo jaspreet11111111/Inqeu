@@ -15,7 +15,7 @@ const Search = ({ activeMenu }) => {
         width: {
           xs: '90%',
           md: '90%',
-          lg: '59%'
+          lg: '65%'
         }
 
       }}

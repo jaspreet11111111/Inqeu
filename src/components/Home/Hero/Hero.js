@@ -10,21 +10,72 @@ const Hero = () => {
         item
         sx={{
           margin: "auto",
-          padding: "5em"
+          padding: {
+            xs: '1.5em',
+            sm: '1em',
+            md: '3em',
+            lg: '5em'
+          }
         }} >
         <Stack spacing={2} >
-          <Typography variant='h3' fontWeight="600" textAlign="center">
+          <Typography
+            variant='p'
+            fontWeight="600"
+            textAlign="center"
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              }
+            }}>
             Search Search?
           </Typography>
-          <Typography variant='h3' fontWeight="600" color="#880ed4" textAlign="center">
+          <Typography
+            variant='p'
+            fontWeight="600"
+            color="#880ed4"
+            textAlign="center"
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              }
+            }}>
             Search on Inqeu.com
           </Typography>
         </Stack>
         <Stack spacing={2} marginTop="3em">
-          <Typography variant='h3' fontWeight="600" textAlign="center">
+          <Typography
+            variant='p'
+            fontWeight="600"
+            textAlign="center"
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              }
+            }}>
             Post Post?
           </Typography>
-          <Typography variant='h3' fontWeight="600" color="#880ed4" textAlign="center">
+          <Typography
+            variant='p'
+            fontWeight="600"
+            color="#880ed4"
+            textAlign="center"
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              }
+            }}>
             Post on Inqeu.com
           </Typography>
         </Stack>
