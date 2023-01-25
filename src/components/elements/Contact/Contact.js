@@ -1,10 +1,10 @@
 import { Box, Button, Grid, InputBase, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import MailIcon from '@mui/icons-material/Mail';
 import PersonIcon from '@mui/icons-material/Person';
 import SortIcon from '@mui/icons-material/Sort';
+import MapImage from "../../assets/images/Map.jpg"
 import "./styles.css"
 const Contact = () => {
   return (
@@ -13,27 +13,36 @@ const Contact = () => {
         xs: '1em',
         sm: '1em',
         md: '2em',
-        lg: '3em'
+        lg: ' 3em 6em'
       }
     }}>
-      <Grid item xs={12} md={6} lg={6}>
-        <Typography
-          variant='h3'
-          fontWeight="700"
-          color="#414141"
-          textAlign='center'
-          paddingTop='1em'>
-          Query
-        </Typography>
-        <Stack spacing='8px' alignItems="center"
+      <Grid item xs={12} md={6} lg={6} >
+
+        <Stack spacing='8px'
           sx={{
             padding: {
-              xs: '0',
-              sm: '0',
+              xs: '0em',
+              sm: '0em',
               md: '2em',
-              lg: '3em'
-            }
+              lg: '2em'
+            },
+            marginTop: '24px'
           }}>
+          <Typography
+            variant='p'
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              },
+              fontWeight: "700",
+              color: "#414141",
+              marginBottom: '1em'
+            }}>
+            Query
+          </Typography>
           <Stack
             bgcolor="#ffff"
             alignItems="center"
@@ -116,7 +125,12 @@ const Contact = () => {
             </textarea>
           </Stack>
           <Button variant='contained' sx={{
-            width: "80%",
+            width: {
+              xs: '100%',
+              sm: '100%',
+              md: '80%',
+              lg: '80%'
+            },
             backgroundColor: "#694ed6",
             borderRadius: "10px"
           }}>
@@ -131,16 +145,16 @@ const Contact = () => {
           spacing={3}
           sx={{
             padding: {
-              xs: '1em',
-              sm: '1em',
+              xs: '0em',
+              sm: '0em',
               md: '2em',
               lg: '3em'
             },
             marginTop: {
               xs: '2em',
               sm: '1em',
-              md: '0em',
-              lg: '0em'
+              md: '1em',
+              lg: '1em'
             },
             width: {
               xs: '100%',
@@ -149,11 +163,20 @@ const Contact = () => {
               lg: '80%'
             }
           }}>
-          <Typography variant='h3' fontWeight="700" color="#414141" >
+          <Typography variant='p' fontWeight="700" color="#414141"
+            sx={{
+              fontSize: {
+                xs: '32px',
+                sm: '36px',
+                md: '42px',
+                lg: '42px'
+              },
+              marginBottom: '20px'
+            }} >
             Reach out
           </Typography>
           <Box>
-            IMAGE
+            <img src={MapImage} alt='address' className='mapImage' />
           </Box>
           <Typography variant='p'>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard

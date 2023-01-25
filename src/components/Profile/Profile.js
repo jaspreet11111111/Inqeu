@@ -1,9 +1,56 @@
 import { Grid, Box, Stack, Typography, Button, InputBase } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
 import { MailOutline } from '@mui/icons-material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import History from './History/History';
 import "./styles.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getUserDetails, updateUserProfile, updateUser } from '../../actions/userAction';
+import { USER_UPDATE_PROFILE_RESET } from '../../constants/actionType'
+
 const Profile = () => {
+  const [user1, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const userDetails = useSelector((state) => state.userDetails)
+  const { loading, error, user } = userDetails;
+  console.log("user:", user)
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const { success } = userUpdateProfile
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/auth')
+    } else {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+        dispatch(getUserDetails('profile'));
+      } else {
+        setName(user.name)
+        console.log(user.name)
+        setEmail(user.email)
+      }
+    }
+  }, [dispatch, userInfo, user, success]);
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(updateUserProfile({ id: user._id, username: name, email }));
+    console.log('this is me')
+    setName('');
+    setEmail('');
+  }
+
   return (
     <Box>
       <Grid container padding='2em' className='profileDetails_container'>
@@ -31,25 +78,39 @@ const Profile = () => {
               }}>
               <Box className='profileName'>
                 <Typography variant='h3' fontWeight='700' color='#880ed4'>
-                  Name
+                  {name}
                 </Typography>
                 <Typography
                   variant='p'
                   fontWeight='600'
                   color='#3f62cd'
                 >
-                  job title
+                  {email}
                 </Typography>
               </Box>
-              <Button variant='contained'
-                sx={{
-                  backgroundColor: "#694ed6",
-                  borderRadius: '2em',
-                  textTransform: 'initial'
-                }}>
-                <ShareIcon />
-                Share Profile
-              </Button>
+              <Stack spacing='14px'>
+                <Button variant='contained'
+                  sx={{
+                    backgroundColor: "#880ED4",
+                    borderRadius: '2em',
+                    textTransform: 'initial'
+                  }}>
+                  <ShareIcon />
+                  Share Profile
+                </Button>
+                <Button variant='outlined'
+                  sx={{
+                    borderColor: "#880ED4",
+                    borderRadius: '2em',
+                    textTransform: 'initial',
+                    color: '#880ED4'
+                  }}>
+                  <DeleteOutlineIcon sx={{
+                    color: '#880ED4'
+                  }} />
+                  Delete Profile
+                </Button>
+              </Stack>
             </Stack>
           </Stack>
           <Stack className='profileSetting_container' spacing={3}>
@@ -91,14 +152,20 @@ const Profile = () => {
                   <Button sx={{ color: '#880ed4' }}>
                     <MailOutline />
                   </Button>
-                  <InputBase placeholder='Write new email address' type='email' fullWidth />
+                  <InputBase
+                    placeholder='Write new email address'
+                    type='email'
+                    fullWidth
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} />
                 </Stack>
                 <Button variant='contained' sx={{
-                  backgroundColor: "#694ed6",
-                  borderRadius: '1em',
+                  backgroundColor: "#880ED4",
+                  borderRadius: '10px',
                   textTransform: 'initial',
-                  width: '25%'
-                }}>
+                  width: '30%'
+                }}
+                  onClick={submitHandler}>
                   Submit
                 </Button>
               </Stack>
@@ -124,7 +191,7 @@ const Profile = () => {
                   },
                   justifyContent: 'space-around'
                 }}>
-                <InputBase placeholder='Write new First Name' className='newName_input' sx={{
+                <InputBase placeholder='Write new Name' className='newName_input' sx={{
                   width: {
                     xs: '100%',
                     sm: '100%',
@@ -137,35 +204,33 @@ const Profile = () => {
                     md: '0 10px',
                     lg: '0 10px'
                   }
-                }} />
-                <InputBase placeholder='Write new Last Name' className='newName_input' sx={{
-                  width: {
-                    xs: '100%',
-                    sm: '100%',
-                    md: '70%',
-                    lg: '70%'
-                  },
-                  margin: {
-                    xs: '10px 0',
-                    sm: '10px 0',
-                    md: '0 10px',
-                    lg: '0 10px'
-                  }
-                }} />
+                }}
+                  value={name}
+                  onChange={e => setName(e.target.value)} />
                 <Button variant='contained' sx={{
-                  backgroundColor: "#694ed6",
-                  borderRadius: '1em',
+                  backgroundColor: "#880ED4",
+                  borderRadius: '10px',
                   textTransform: 'initial',
                   width: '30%'
-                }}>
+                }}
+                  onClick={submitHandler}>
                   Submit
                 </Button>
               </Stack>
             </Box>
           </Stack>
+          <Stack className='historyContainer' sx={{
+            padding: {
+              xs: '16px',
+              sm: '16px',
+              md: '60px',
+              lg: '60px'
+            }
+          }}>
+            <History />
+          </Stack>
         </Grid>
-
-        <Grid item md={3} lg={2} border="1px solid #e5c3fa ">
+        <Grid item md={3} lg={2} border="1px solid #e5c3fa" borderRadius='10px'>
         </Grid>
       </Grid>
     </Box>

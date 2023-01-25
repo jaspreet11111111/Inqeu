@@ -8,36 +8,43 @@ const Select = ({ name }) => {
     setIsClicked(!isClicked);
   }
   return (
-    <Stack >
+    <>
+      <div></div>
       <Stack
         direction='row'
         justifyContent='space-between'
         alignItems='center'
         padding='0 10px'
         border='1px solid lightgray'>
-        <Typography color='gray' variant='p' fontWeight='600'>
+        <Typography color='gray' variant='p' fontWeight='500'>
           {name}
         </Typography>
         <Button onClick={handleClick} sx={{ textTransform: 'initial', color: 'black' }} >
           <ArrowDropDownIcon />
         </Button>
       </Stack>
-      <Card>
-        {isClicked && (
-          <List sx={{ position: 'absolute', boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.25)', zIndex: 99, bgcolor: '#fff' }}>
-            <ListItem>
-              Item 1
-            </ListItem>
-            <ListItem>
-              Item 2
-            </ListItem>
-            <ListItem>
-              Item 3
-            </ListItem>
-          </List>
-        )}
-      </Card>
-    </Stack>
+      {/* <Card> */}
+      {isClicked && (
+        <List sx={{
+          boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.25)',
+          zIndex: 99,
+          bgcolor: '#FBF6FE',
+          width: '100%'
+        }}>
+          <ListItem>
+            Item 1
+          </ListItem>
+          <ListItem>
+            Item 2
+          </ListItem>
+          <ListItem>
+            Item 3
+          </ListItem>
+        </List>
+      )}
+      {/* </Card> */}
+
+    </>
   )
 }
 

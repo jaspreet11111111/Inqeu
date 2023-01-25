@@ -48,3 +48,23 @@
   /* width: 34%; */
   padding: 5px;
 }
+
+.historyContainer {
+  border: 1px solid #e5c3fa;
+  border-radius: 1em;
+  margin-top: 2em;
+}
+
+.historyList {
+  padding-top: 24px;
+}
+
+.historyItem {
+  background: #EFD9FC;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.historyItem_alternative {
+  background: #FBF5FE;
+  border-radius: 0px 0px 8px 8px;
+}
