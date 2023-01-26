@@ -183,14 +183,6 @@ const SignupCard = () => {
                     onChange={handleChange}
                     type={showPassword ? 'text' : 'password'}
                     name='confirmPassword' />
-                  <Button onClick={handleShowPassword}>
-                    {showPassword ? <VisibilityOffIcon sx={{
-                      color: 'rgba(0, 0, 0, 0.12)'
-                    }} /> : <VisibilityIcon sx={{
-                      color: 'rgba(0, 0, 0, 0.12)'
-                    }}
-                    />}
-                  </Button>
                 </Stack>
               )}
               <Stack

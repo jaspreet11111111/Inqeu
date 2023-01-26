@@ -10,10 +10,11 @@ const generateToken = id => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
+
 const signin = asyncHandler(async (req, res) => {
   const { email, password } = req.body
-
-  const user = await User.findOne({ email: email }).select('+password');
+  const user = await User.findOne({ email }).select('+password');
+  console.log("user:", user);
 
   if (user && (await user.correctPassword(password, user.password))) {
     res.json({
@@ -62,20 +63,6 @@ const signup = asyncHandler(async (req, res) => {
   }
 })
 
-// const getUserById = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id).select('-password')
-//     if (user) {
-//       res.json(user)
-//     } else {
-//       res.status(404)
-//       throw new Error('User not found')
-//     }
-//   } catch (err) {
-//     res.status(404)
-//     throw new Error(err)
-//   }
-// }
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
@@ -91,6 +78,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 })
+
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findOne({ _id: new mongoose.Types.ObjectId(req.user._id) })
@@ -117,8 +105,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 })
+
+
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
+  console.log(req.params.id)
 
   if (user) {
     await user.remove()
@@ -128,6 +119,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 })
+
 
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)

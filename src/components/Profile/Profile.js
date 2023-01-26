@@ -2,13 +2,14 @@ import { Grid, Box, Stack, Typography, Button, InputBase } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
 import { MailOutline } from '@mui/icons-material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import History from './History/History';
 import "./styles.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getUserDetails, updateUserProfile, updateUser } from '../../actions/userAction';
-import { USER_UPDATE_PROFILE_RESET } from '../../constants/actionType'
+import { getUserDetails, updateUserProfile, updateUser, deleteUser } from '../../actions/userAction';
+import { USER_UPDATE_PROFILE_RESET } from '../../constants/actionType';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Delete from './Delete';
 
 const Profile = () => {
   const [user1, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -49,6 +50,10 @@ const Profile = () => {
     console.log('this is me')
     setName('');
     setEmail('');
+  }
+
+  const deleteHandler = () => {
+    dispatch(deleteUser(userInfo._id, navigate))
   }
 
   return (
@@ -99,6 +104,7 @@ const Profile = () => {
                   Share Profile
                 </Button>
                 <Button variant='outlined'
+                  onClick={deleteHandler}
                   sx={{
                     borderColor: "#880ED4",
                     borderRadius: '2em',

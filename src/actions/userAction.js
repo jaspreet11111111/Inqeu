@@ -80,7 +80,7 @@ export const deleteUser = (id, navigate) => async (dispatch, getState) => {
 			},
 		}
 
-		await axios.delete(`/api/v1/user/${ id }`, config)
+		await axios.delete(`http://localhost:8000/api/v1/user/${ id }`, config)
 
 		dispatch({ type: USER_DELETE_SUCCESS })
 
@@ -107,7 +107,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 			},
 		}
 
-		const { data } = await axios.put(`/api/v1/user/profile`, user, config)
+		const { data } = await axios.put(`http://localhost:8000/api/v1/user/profile`, user, config)
 
 		dispatch({
 			type: USER_UPDATE_PROFILE_SUCCESS,
@@ -150,7 +150,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
 			},
 		}
 
-		const { data } = await axios.put(`/api/v1/user/${ user._id }`, user, config)
+		const { data } = await axios.put(`/ api / v1 / user / ${ user._id }`, user, config)
 
 		dispatch({ type: USER_UPDATE_SUCCESS })
 

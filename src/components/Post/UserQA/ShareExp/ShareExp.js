@@ -31,6 +31,7 @@ const ShareExpDialog = () => {
 		e.preventDefault();
 		dispatch(createPost(postData));
 		console.log(postData)
+		handleClose();
 	}
 
 	return (
