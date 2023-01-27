@@ -13,7 +13,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		}
-		const { data } = await axios.post('http://localhost:8000/api/v1/user/signin', formData, config)
+		const { data } = await axios.post('/api/v1/user/signin', formData, config)
 		dispatch({
 			type: USER_REGISTER_SUCCESS,
 			payload: data,
@@ -47,7 +47,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
 			},
 		}
 
-		const { data } = await axios.post('http://localhost:8000/api/v1/user/signup', formData, config);
+		const { data } = await axios.post('/api/v1/user/signup', formData, config);
 		console.log("authwalSignup", data)
 		dispatch({
 			type: USER_REGISTER_SUCCESS,

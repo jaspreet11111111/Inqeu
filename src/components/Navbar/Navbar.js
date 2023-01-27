@@ -6,7 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Search from './SearchBar/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,17 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
+    toast.success('Logout successful',
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
     navigate('/auth');
     localStorage.clear()
     setUser(null)
@@ -129,9 +141,9 @@ const Navbar = () => {
                 }}>
                   <Stack justifyContent='center' direction='row'>
                     <Link to='/profile' className='profileLink' >
-                      <Typography className='user_profileImage' textTransform='capitalize'>
+                      {/* <Typography className='user_profileImage' textTransform='capitalize'>
                         {user.user.name.substring(0, 1)}
-                      </Typography>
+                      </Typography> */}
                       <Typography variant='p' fontSize='16px' fontWeight='500'>
                         {user.user.name}
                       </Typography>
@@ -209,9 +221,9 @@ const Navbar = () => {
                   }}>
                     <Stack justifyContent='center' direction='row'>
                       <Link to='/profile' className='profileLink' >
-                        <Typography className='user_profileImage' textTransform='capitalize'>
+                        {/* <Typography className='user_profileImage' textTransform='capitalize'>
                           {user.user.name.substring(0, 1)}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='p' fontSize='16px' fontWeight='500'>
                           {user.user.name}
                         </Typography>

@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { getUserDetails, updateUserProfile, updateUser, deleteUser } from '../../actions/userAction';
 import { USER_UPDATE_PROFILE_RESET } from '../../constants/actionType';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import Delete from './Delete';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
   const [user1, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -47,7 +48,16 @@ const Profile = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(updateUserProfile({ id: user._id, username: name, email }));
-    console.log('this is me')
+    toast.success('Profile Updated successfully', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    })
     setName('');
     setEmail('');
   }

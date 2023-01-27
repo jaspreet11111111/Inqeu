@@ -25,19 +25,9 @@ export const postListReducer = (state = { posts: [] }, action) => {
   }
 }
 
-// export const postCreateReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case POST_CREATE_REQUEST:
-//       return { loading: true }
-
-//     case POST_CREATE_FAIL:
-//       return { loading: false, error: action.payload }
-//     case POST_CREATE_RESET:
-//       return {}
-//     default:
-//       return state
-//   }
-// }
+export const fetchNewPosts = (state, action) => {
+  state.postList.push(action.payload.newPost)
+}
 
 const intialState = [];
 export const postCreateReducer = (state = { post: [], success: false }, action) => {

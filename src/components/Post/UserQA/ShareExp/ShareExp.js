@@ -5,6 +5,7 @@ import "../../styles.css";
 import { useDispatch, useSelector } from 'react-redux';
 import e from 'cors';
 import { createPost } from '../../../../actions/posts';
+import { toast } from 'react-toastify';
 
 const ShareExpDialog = () => {
 	const { userInfo: { user } } = useSelector(state => state.userLogin)
@@ -29,7 +30,17 @@ const ShareExpDialog = () => {
 	const postCreate = useSelector((state) => state.postCreated);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(createPost(postData));
+		dispatch(createPost(postData))
+		toast.success('Post added successfully', {
+			position: "top-center",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
 		console.log(postData)
 		handleClose();
 	}

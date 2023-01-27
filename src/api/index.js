@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:8000/' });
+const API = axios.create({ baseURL: '' });
 
 export const fetchPostsApi = () => API.get('api/v1/posts');
 export const createPostApi = (newPost) => API.post('api/v1/posts', newPost)

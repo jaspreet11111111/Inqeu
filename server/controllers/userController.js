@@ -16,7 +16,7 @@ const signin = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email }).select('+password');
   console.log("user:", user);
 
-  if (user && (await user.correctPassword(password, user.password))) {
+  if (user && !(await user.correctPassword(password, user.password))) {
     res.json({
       user: {
         _id: user._id,

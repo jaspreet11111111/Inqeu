@@ -10,12 +10,15 @@ import Profile from "./components/Profile/Profile";
 import Signin from "./components/Signin/Signin";
 import Signup from "./components/Singup/Signup";
 import { getPosts } from "./actions/posts";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App () {
   return (
     <div className="App">
       <div className="navbar">
         <Navbar />
+        <ToastContainer />
       </div>
       <div className="routes">
         <Routes>

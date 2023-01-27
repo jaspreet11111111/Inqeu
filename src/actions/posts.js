@@ -33,7 +33,7 @@ export const createPost = (postData) => async (dispatch, getState) => {
 			},
 		}
 
-		const { data } = await axios.post(`http://localhost:8000/api/v1/posts`, postData, config);
+		const { data } = await axios.post(`/api/v1/posts`, postData, config);
 		console.log("postWalaData:", data)
 
 		dispatch({
@@ -63,7 +63,7 @@ export const listPosts = () => async (
 		dispatch({ type: POST_LIST_REQUEST })
 
 		const { data } = await axios.get(
-			`http://localhost:8000/api/v1/posts`
+			`/api/v1/posts`
 		)
 
 		dispatch({

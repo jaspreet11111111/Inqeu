@@ -13,7 +13,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import SignInImage from "../assets/images/Layer 2.png";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const initialState = {
   username: '',
   email: '',
@@ -32,9 +33,29 @@ const SignupCard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (IsSignUp) {
+      toast.success("Login successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
       dispatch(signin(formData, navigate))
     }
     else {
+      toast.success("Signup success", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       dispatch(signup(formData, navigate))
     }
     console.log("formdata:", formData)
@@ -161,29 +182,38 @@ const SignupCard = () => {
                   />}
                 </Button>
               </Stack>
+              <Typography fontSize='12px' color='red' textAlign='left'>
+                Password must have 8 charecters
+              </Typography>
               {!IsSignUp && (
-                <Stack
-                  bgcolor="#ffff"
-                  direction="row"
-                  alignItems
-                  border="1px solid rgba(0, 0, 0, 0.12)"
-                  sx={{
-                    width: '100%',
-                    height: '48px',
-                    borderRadius: '10px',
-                    marginTop: '24px'
-                  }}>
-                  <VpnKeyIcon sx={{
-                    color: '#880ED4',
-                    padding: '12px 20px'
-                  }} />
-                  <InputBase
-                    placeholder='Re-enter Password'
-                    fullWidth
-                    onChange={handleChange}
-                    type={showPassword ? 'text' : 'password'}
-                    name='confirmPassword' />
-                </Stack>
+                <>
+
+                  <Stack
+                    bgcolor="#ffff"
+                    direction="row"
+                    alignItems
+                    border="1px solid rgba(0, 0, 0, 0.12)"
+                    sx={{
+                      width: '100%',
+                      height: '48px',
+                      borderRadius: '10px',
+                      marginTop: '24px'
+                    }}>
+                    <VpnKeyIcon sx={{
+                      color: '#880ED4',
+                      padding: '12px 20px'
+                    }} />
+                    <InputBase
+                      placeholder='Re-enter Password'
+                      fullWidth
+                      onChange={handleChange}
+                      type={showPassword ? 'text' : 'password'}
+                      name='confirmPassword' />
+                  </Stack>
+                  <Typography fontSize='12px' color='red' textAlign='left'>
+                    Password must be same
+                  </Typography>
+                </>
               )}
               <Stack
                 direction='row'
@@ -208,6 +238,7 @@ const SignupCard = () => {
                 onClick={handleSubmit}>
                 Sign up
               </Button>
+              <ToastContainer />
             </form>
             <Typography
               fontSize='20px'

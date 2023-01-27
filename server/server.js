@@ -1,6 +1,8 @@
 const app = require('./app')
+const express = require('express')
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path')
 
 dotenv.config({ path: './config.env' });
 
@@ -14,7 +16,10 @@ mongoose.connect(DB, {
     console.log(err)
 })
 // mongoose.set('strictQuery', true)
-const PORT = 8000
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log('Server connected succesfully!!')
 })
+
+const buildPath = path.join(__dirname, '..', 'build')
+app.use(express.static(buildPath))
