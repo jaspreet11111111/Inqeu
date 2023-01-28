@@ -1,5 +1,5 @@
 import { Route, Link } from "react-router-dom";
-import { Routes } from 'react-router-dom';
+import { Routes, useLocation } from 'react-router-dom';
 import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
@@ -13,32 +13,47 @@ import { getPosts } from "./actions/posts";
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLayoutEffect } from 'react';
+
+const Wrapper = ({ children }) => {
+  const location = useLocation();
+  useLayoutEffect(() => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [location.pathname]);
+  return children
+}
 function App () {
   return (
-    <div className="App">
-      <div className="navbar">
-        <Navbar />
-        <ToastContainer />
+    <Wrapper>
+      <div className="App">
+        <div className="navbar">
+          <Navbar />
+          <ToastContainer />
+        </div>
+        <div className="routes">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+          <Routes>
+            <Route path="/about" element={<About />} />
+          </Routes>
+          <Routes>
+            <Route path="/post" element={<Post />} />
+          </Routes>
+          <Routes>
+            <Route path="/auth" element={<Signup />} />
+          </Routes>
+          <Routes>
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <div className="routes">
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-        <Routes>
-          <Route path="/about" element={<About />} />
-        </Routes>
-        <Routes>
-          <Route path="/post" element={<Post />} />
-        </Routes>
-        <Routes>
-          <Route path="/auth" element={<Signup />} />
-        </Routes>
-        <Routes>
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </div>
-      <Footer />
-    </div>
+    </Wrapper>
   );
 }
 
