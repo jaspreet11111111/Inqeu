@@ -6,13 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import e from 'cors';
 import { createPost } from '../../../../actions/posts';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ShareExpDialog = () => {
-	const { userInfo: { user } } = useSelector(state => state.userLogin)
+	const navigate = useNavigate();
+	const { userInfo } = useSelector(state => state.userLogin);
+	const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
+	console.log(userLocal)
+	const user = userLocal?.user
+	console.log(userInfo)
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
 		description: '',
-		username: user.name
+		username: user?.name
 	})
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
@@ -30,19 +36,33 @@ const ShareExpDialog = () => {
 	const postCreate = useSelector((state) => state.postCreated);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(createPost(postData))
-		toast.success('Post added successfully', {
-			position: "top-center",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-		});
-		console.log(postData)
-		handleClose();
+		if (user !== undefined) {
+			dispatch(createPost(postData))
+			toast.success('Post added successfully', {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+			handleClose();
+		}
+		else {
+			navigate('/auth')
+			toast.warning('Please signup or login to add posts', {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+		}
 	}
 
 	return (
