@@ -103,7 +103,7 @@ const SignupCard = () => {
           }}>
           <Stack className='signinCard_stack'>
             <Typography color='#414141' variant='p' fontSize='20px' fontWeight='700' marginBottom='32px'>
-              {IsSignUp ? 'Sign In' : 'Sign Up'}
+              {!IsSignUp ? 'Sign In' : 'Sign Up'}
             </Typography>
             <form onSubmit={handleSubmit}>
               {!IsSignUp && (
@@ -186,7 +186,7 @@ const SignupCard = () => {
               <Typography fontSize='12px' color='red' textAlign='left'>
                 Password must have 8 charecters
               </Typography>
-              {!IsSignUp && (
+              {IsSignUp && (
                 <>
 
                   <Stack
@@ -288,10 +288,10 @@ const SignupCard = () => {
             </Stack>
             <Link className='newAccount_link' onClick={switchMode}>
               <Typography color='black' fontFamily='Poppins'>
-                {IsSignUp ? 'Create new account' : 'Already have an account? '}
+                {!IsSignUp ? 'Create new account' : 'Already have an account? '}
               </Typography>
               <Typography color='#880ED4' fontFamily='Poppins'>{
-                IsSignUp ? 'New?' : 'Login'
+                !IsSignUp ? 'New?' : 'Login'
               }</Typography>
             </Link>
           </Stack>

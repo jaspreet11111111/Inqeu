@@ -158,7 +158,7 @@ const Navbar = () => {
             <>
               <Typography variant='p' fontWeight="500">
                 <NavLink to='/auth' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
-                  {isSignedUp ? 'Signin' : 'Signup'}
+                  {!isSignedUp ? 'Signin' : 'Signup'}
                 </NavLink>
 
               </Typography>
@@ -230,7 +230,6 @@ const Navbar = () => {
                       </Link>
                     </Stack>
                     <Button onClick={logout}>Logout</Button>
-
                   </Card>
                 )}
               </Box>
@@ -238,9 +237,8 @@ const Navbar = () => {
               <>
                 <Typography variant='p' fontWeight="500">
                   <NavLink to='/auth' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
-                    {isSignedUp ? 'Signin' : 'Signup'}
+                    {!isSignedUp ? 'Signin' : 'Signup'}
                   </NavLink>
-
                 </Typography>
               </>
             )}
