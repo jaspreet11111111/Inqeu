@@ -1,12 +1,42 @@
 import { Box, Button, Grid, InputBase, Paper, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonIcon from '@mui/icons-material/Person';
 import SortIcon from '@mui/icons-material/Sort';
 import MapImage from "../../assets/images/Map.jpg"
-import "./styles.css"
+import "./styles.css";
+import { useDispatch } from 'react-redux';
+import { createQuery } from '../../../actions/query';
+import { toast } from 'react-toastify';
+const initialState = {
+  name: '',
+  email: '',
+  phoneNumber: '',
+  message: ''
+}
 const Contact = () => {
+  const [formData, setFormData] = useState(initialState);
+  console.log(formData)
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = () => {
+    dispatch(createQuery(formData));
+    toast.success("Query successfully added! Will reach you soon", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    })
+  }
   return (
     <Grid container sx={{
       backgroundColor: "#eeddff", padding: {
@@ -17,7 +47,6 @@ const Contact = () => {
       }
     }}>
       <Grid item xs={12} md={6} lg={6} >
-
         <Stack spacing='8px'
           sx={{
             padding: {
@@ -62,7 +91,11 @@ const Contact = () => {
               color: '#694ed6',
               padding: '12px 20px'
             }} />
-            <InputBase placeholder='Enter Your Name' fullWidth />
+            <InputBase
+              placeholder='Enter Your Name'
+              fullWidth
+              name='name'
+              onChange={(e) => handleChange(e)} />
           </Stack>
           <Stack
             bgcolor="#ffff"
@@ -82,7 +115,11 @@ const Contact = () => {
               color: '#694ed6',
               padding: '12px 20px'
             }} />
-            <InputBase placeholder='Enter your Mail' fullWidth />
+            <InputBase
+              placeholder='Enter your Mail'
+              fullWidth
+              name='email'
+              onChange={(e) => handleChange(e)} />
           </Stack>
           <Stack
             bgcolor="#ffff"
@@ -104,7 +141,12 @@ const Contact = () => {
                 color: '#694ed6',
                 padding: '12px 20px'
               }} />
-            <InputBase placeholder='Enter your Phone number' type='number' fullWidth />
+            <InputBase
+              placeholder='Enter your Phone number'
+              type='number'
+              fullWidth
+              name='phoneNumber'
+              onChange={(e) => handleChange(e)} />
           </Stack>
           <Stack
             bgcolor="#ffff"
@@ -121,7 +163,11 @@ const Contact = () => {
               borderRadius: '4px'
             }}>
             <SortIcon sx={{ color: '#694ed6', margin: '20.5px 18.5px' }} />
-            <textarea placeholder='Enter your message' className='textArea_input'>
+            <textarea
+              placeholder='Enter your message'
+              className='textArea_input'
+              name='message'
+              onChange={(e) => handleChange(e)}>
             </textarea>
           </Stack>
           <Button variant='contained' sx={{
@@ -133,7 +179,8 @@ const Contact = () => {
             },
             backgroundColor: "#694ed6",
             borderRadius: "10px"
-          }}>
+          }}
+            onClick={handleSubmit}>
             Submit
           </Button>
         </Stack>

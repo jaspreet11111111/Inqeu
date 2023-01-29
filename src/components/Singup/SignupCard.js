@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import "./styles.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { signin, signup } from '../../actions/auth';
-import GoogleLogin from "react-google-login"
+import { GoogleLogin } from "react-google-login"
+import { LinkedIn } from 'react-linkedin-login-oauth2';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import PersonIcon from '@mui/icons-material/Person';
@@ -267,11 +268,22 @@ const SignupCard = () => {
                 onFailure={googleFailure}
                 cookiePolicy='single_host_origin' />
               <Box className='signin_option'>
-                <LinkedInIcon sx={{
-                  color: '#414141',
-                  marginRight: '10px'
-                }} />
-                Signin with LinkedIn
+                {/* <LinkedIn
+                  clientId="YOUR_CLIENT_ID"
+                  onFailure={error => console.log(error)}
+                  onSuccess={data => console.log(data)}
+                  redirectUri={`http://localhost:3000`}
+                  scope="r_liteprofile r_emailaddress"
+                  renderElement={({ onClick, disabled }) => (
+                    <Button onClick={onClick} disabled={disabled}>
+                      <LinkedInIcon sx={{
+                        color: '#414141',
+                        marginRight: '10px'
+                      }} />
+                      Signin with LinkedIn
+                    </Button>
+                  )}
+                /> */}
               </Box>
             </Stack>
             <Link className='newAccount_link' onClick={switchMode}>

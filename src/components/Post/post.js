@@ -12,6 +12,7 @@ import { getPosts, listPosts } from '../../actions/posts';
 const Post = () => {
   const dispatch = useDispatch();
   let { posts } = useSelector(state => state.postList);
+  console.log(posts)
   useEffect(() => {
     dispatch(listPosts());
   }, [])
