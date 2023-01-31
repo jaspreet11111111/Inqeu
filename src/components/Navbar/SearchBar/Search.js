@@ -17,7 +17,6 @@ const Search = ({ activeMenu }) => {
           md: '90%',
           lg: '69%'
         }
-
       }}
       direction='row'
       alignItems="center"

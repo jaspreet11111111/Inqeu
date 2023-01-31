@@ -12,8 +12,7 @@ const ShareExpDialog = () => {
 	const navigate = useNavigate();
 	const { userInfo } = useSelector(state => state.userLogin);
 	const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
-	console.log(userLocal)
-	const user = userLocal?.user
+	const user = userInfo?.user
 	console.log(userInfo)
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
@@ -36,7 +35,7 @@ const ShareExpDialog = () => {
 	const postCreate = useSelector((state) => state.postCreated);
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (user !== undefined) {
+		if (userLocal !== null) {
 			dispatch(createPost(postData))
 			toast.success('Post added successfully', {
 				position: "top-center",

@@ -42,11 +42,6 @@ const Footer = () => {
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="/search" className='footer_link'>
-              Search
-            </Link>
-          </ListItem>
-          <ListItem>
             <Link to="/post" className='footer_link'>
               Post
             </Link>

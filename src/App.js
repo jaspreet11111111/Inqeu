@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLayoutEffect } from 'react';
+import EmailVerification from "./components/EmailVerification/EmailVerification";
 
 const Wrapper = ({ children }) => {
   const location = useLocation();
@@ -49,6 +50,9 @@ function App () {
           </Routes>
           <Routes>
             <Route path="/profile" element={<Profile />} />
+          </Routes>
+          <Routes>
+            <Route path='api/v1/user/:id/verify/:token' element={EmailVerification} />
           </Routes>
         </div>
         <Footer />

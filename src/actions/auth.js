@@ -23,7 +23,8 @@ export const signin = (formData, navigate) => async (dispatch) => {
 			type: USER_LOGIN_SUCCESS,
 			payload: data,
 		})
-		localStorage.setItem('profile', JSON.stringify(data))
+		localStorage.setItem('profile', JSON.stringify(data));
+		localStorage.setItem('token', data.token)
 		navigate('/');
 	} catch (error) {
 		dispatch({

@@ -24,6 +24,7 @@ const initialState = {
 }
 const SignupCard = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState('')
   const dispatch = useDispatch();
   const clientId = '96998420895-cd2gslmhocm4dui889a0pl2807j46f7r.apps.googleusercontent.com'
   const [IsSignUp, setIsSignup] = useState(false);
@@ -33,7 +34,7 @@ const SignupCard = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (IsSignUp) {
+    if (!IsSignUp) {
       toast.success("Login successful", {
         position: "top-center",
         autoClose: 5000,
@@ -44,6 +45,7 @@ const SignupCard = () => {
         progress: undefined,
         theme: "light",
       })
+      setMessage('Message')
       dispatch(signin(formData, navigate))
     }
     else {
@@ -106,7 +108,7 @@ const SignupCard = () => {
               {!IsSignUp ? 'Sign In' : 'Sign Up'}
             </Typography>
             <form onSubmit={handleSubmit}>
-              {!IsSignUp && (
+              {IsSignUp && (
                 <Stack
                   bgcolor="#ffff"
                   direction="row"
