@@ -1,4 +1,3 @@
-const { promisify } = require('util');
 const bcrypt = require('bcrypt');
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken');
@@ -7,12 +6,23 @@ const { default: mongoose } = require('mongoose');
 const Token = require('../models/token')
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-
-
+const { v4: uuidv4 } = require('uuid')
+const nodemailer = require('nodemailer')
+const path = require('path')
 const generateToken = id => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
 
+const transporter = nodemailer.createTransport({
+  host: 'smpt.gmail.com',
+  service: process.env.SERVICE,
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.USER,
+    pass: process.env.PASSWORD,
+  },
+});
 
 
 const signin = asyncHandler(async (req, res) => {
@@ -30,21 +40,19 @@ const signin = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     })
   }
-  if (!user.isVerified) {
-    let token = await new Token({
-      // userId: user._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
-
-    const message = `${ process.env.BASE_URL }api/v1/user/verify/${ user._id }/${ token.token }`;
-    await sendEmail(user.email, "Verify Email", message);
-
-    res.json({ message: "An Email sent to your account please verify" });
-  }
-  else {
+  if (user && (await user.correctPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    })
+  } else {
     res.status(401)
     throw new Error('Invalid email or password')
   }
+
 })
 
 const signup = asyncHandler(async (req, res) => {
@@ -56,32 +64,23 @@ const signup = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
-  userExists = await User.create({
+  const user = await User.create({
     name: username,
     email: email,
     password: password,
-    confirmPassword: confirmPassword
+    confirmPassword: confirmPassword,
+    verified: false
   })
 
-  if (userExists) {
+  if (user) {
     res.status(201).json({
       user: {
-        _id: userExists._id,
-        name: userExists.name,
-        email: userExists.email,
+        _id: user._id,
+        name: user.name,
+        email: user.email
       },
-      token: generateToken(userExists._id)
+      token: generateToken(user._id)
     })
-
-    let token = await new Token({
-      userId: userExists._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
-
-    const message = `${ process.env.BASE_URL }api/v1/user/verify/${ userExists.id }/${ token }`;
-    await sendEmail(userExists.email, "Verify Email", message);
-
-    res.send("An Email sent to your account please verify");
   } else {
     res.status(400)
     throw new Error('Invalid user data')
@@ -106,25 +105,7 @@ const resetPassword = (req, res, next) => {
 
 }
 
-const verifyEmail = async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
-    if (!user) return res.status(400).send("Invalid link");
 
-    const token = await Token.findOne({
-      userId: user._id,
-      token: req.params.token,
-    });
-    if (!token) return res.status(400).send("Invalid link");
-
-    await User.updateOne({ _id: user._id, verified: true });
-    await Token.findByIdAndRemove(token._id);
-
-    res.send("email verified sucessfully");
-  } catch (error) {
-    res.status(400).send("An error occured");
-  }
-}
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
   console.log(req)
@@ -139,7 +120,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 })
-
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findOne({ _id: new mongoose.Types.ObjectId(req.user._id) })
@@ -203,6 +183,8 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+
+
 module.exports = {
   signin,
   signup,
@@ -211,7 +193,6 @@ module.exports = {
   updateUserProfile,
   getUserProfile,
   forgotPassword,
-  resetPassword,
-  verifyEmail
+  resetPassword
 }
 
