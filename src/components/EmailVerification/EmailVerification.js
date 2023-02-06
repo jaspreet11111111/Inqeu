@@ -10,22 +10,21 @@ const EmailVerification = () => {
 	console.log("userOTP:", userInfo);
 
 	const userOTP = useSelector(state => state.otpGen);
-	console.log(userOTP)
 	const [formData, setFormData] = useState({
 		otp: '',
-		userId: userInfo.user._id
+		userId: ''
 	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const handleSub = (e) => {
 		e.preventDefault();
-		console.log('success otp')
 
-		dispatch(generateOtp())
-		console.log('success otp');
-		console.log('otpForm:', formData)
+
+		dispatch(generateOtp({ ...formData, userId: userInfo.userInfo.user._id, some: 'some', loda: 'jaspreet' }, navigate))
+
 	}
+
 
 	return (
 		<Card>
@@ -48,7 +47,7 @@ const EmailVerification = () => {
 					<InputBase
 						placeholder='Username'
 						name='username'
-						onChange={e => setFormData({ ...formData, otp: e.target.value, userId: userInfo?.user._id })}
+						onChange={e => setFormData({ ...formData, otp: e.target.value })}
 						autoFocus={true}
 						fullWidth
 						required={true}

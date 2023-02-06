@@ -67,6 +67,7 @@ const signup = asyncHandler(async (req, res) => {
     owner: user._id,
     token: OTP
   })
+  console.log("otp:", OTP)
 
   await verificationToken.save();
   await user.save();
@@ -191,8 +192,7 @@ const updateUser = asyncHandler(async (req, res) => {
 })
 
 const verifyEmail = async (req, res) => {
-  const { userId, otp } = req.body;
-  console.log(req.user._id)
+  const { otp, userId } = req.body;
   console.log(req.body)
   if (!userId || !otp.trim()) {
     res.status(400).json({

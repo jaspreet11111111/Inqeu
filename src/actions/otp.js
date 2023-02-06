@@ -1,7 +1,7 @@
 import { USER_OTP_FAIL, USER_OTP_SUCCESS, USER_OTP_REQUEST, USER_LOGOUT } from "../constants/actionType";
 import axios from "axios";
 
-export const generateOtp = (formData, navigate) => async (dispatch) => {
+export const generateOtp = (formData, navigate) => async (dispatch, getState) => {
 	try {
 		dispatch({
 			type: USER_OTP_REQUEST,
@@ -12,7 +12,7 @@ export const generateOtp = (formData, navigate) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		}
-
+		console.log('form dara', formData)
 		const { data } = await axios.post('/api/v1/user/verify-email', formData, config);
 		console.log("actionwalalOTP", data)
 

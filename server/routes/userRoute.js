@@ -5,7 +5,6 @@ const { protect } = require('../middleware/auth')
 router
 	.post('/signin', signin)
 	.post('/signup', signup)
-	.post('/verify-email', verifyEmail)
 
 router
 	.get('/forgotPassword',)
@@ -21,5 +20,9 @@ router
 	.route('/:id')
 	.delete(protect, deleteUser)
 	.put(protect, updateUser)
+
+router
+	.route('/verify-email')
+	.post(verifyEmail)
 
 module.exports = router
