@@ -16,6 +16,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import SignInImage from "../assets/images/Layer 2.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 const initialState = {
   username: '',
   email: '',
@@ -59,11 +61,11 @@ const SignupCard = () => {
         progress: undefined,
         theme: "light",
       });
-      dispatch(signup(formData, navigate))
+      dispatch(signup(formData, navigate));
+      navigate('/verify')
     }
     console.log("formdata:", formData)
   }
-
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);

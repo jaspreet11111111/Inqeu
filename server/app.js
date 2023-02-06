@@ -6,7 +6,7 @@ const postRouter = require('./routes/postRoute');
 const userRouter = require('./routes/userRoute');
 const queryRouter = require('./routes/queryRoute');
 const { auth } = require('./middleware/auth');
-const path = require('path')
+const path = require('path');
 
 app.use(express.json());
 app.use(cors())
@@ -19,8 +19,8 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/query', queryRouter);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public', "index.html"))
-})
+	res.sendFile(path.resolve(__dirname, '../public', "index.html"))
+});
 
 module.exports = app
 

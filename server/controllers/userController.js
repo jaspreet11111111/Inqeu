@@ -2,28 +2,18 @@ const bcrypt = require('bcrypt');
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
-const { default: mongoose } = require('mongoose');
+const { default: mongoose, isValidObjectId } = require('mongoose');
 const Token = require('../models/token')
-const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid')
 const nodemailer = require('nodemailer')
-const path = require('path')
+const path = require('path');
+const { generateOtp } = require('../utils/email');
+const { mailTransport } = require('../utils/email');
+const { use } = require('../app');
 const generateToken = id => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
-
-const transporter = nodemailer.createTransport({
-  host: 'smpt.gmail.com',
-  service: process.env.SERVICE,
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.USER,
-    pass: process.env.PASSWORD,
-  },
-});
-
 
 const signin = asyncHandler(async (req, res) => {
   const { email, password } = req.body
@@ -64,7 +54,7 @@ const signup = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
-  const user = await User.create({
+  const user = new User({
     name: username,
     email: email,
     password: password,
@@ -72,12 +62,29 @@ const signup = asyncHandler(async (req, res) => {
     verified: false
   })
 
+  const OTP = generateOtp();
+  const verificationToken = new Token({
+    owner: user._id,
+    token: OTP
+  })
+
+  await verificationToken.save();
+  await user.save();
+
+  mailTransport().sendMail({
+    from: 'emailverification@gmail.com',
+    to: user.email,
+    subject: 'Verification email',
+    html: `<p>Please write this otp</p><h1>${ OTP }</h1>`
+  })
+
   if (user) {
     res.status(201).json({
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user?.email,
+        verified: user?.verified
       },
       token: generateToken(user._id)
     })
@@ -183,6 +190,65 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+const verifyEmail = async (req, res) => {
+  const { userId, otp } = req.body;
+  console.log(req.user._id)
+  console.log(req.body)
+  if (!userId || !otp.trim()) {
+    res.status(400).json({
+      message: 'Invalid'
+    })
+  }
+  if (!isValidObjectId(userId)) {
+    res.status(400).json({
+      message: 'Invalid user id'
+    })
+  }
+  const user = await User.findById(userId);
+  console.log(user)
+  if (!user) {
+    res.status(500).json({
+      message: 'Invalid user'
+    })
+  }
+
+  if (user.verified) {
+    res.status(400).json({
+      message: 'user already verify'
+    })
+  }
+
+  const token = await Token.findOne({ owner: user._id });
+  if (!token) {
+    res.status(500).json({
+      message: 'Sorry user not found'
+    })
+  }
+
+  const isMatched = await token.compareToken(otp);
+  if (!isMatched) {
+    res.status(500).json({
+      message: 'please verify correct token'
+    })
+  }
+  user.verified = true;
+
+  await Token.findByIdAndDelete(token._id);
+  await user.save();
+
+  mailTransport().sendMail({
+    from: 'emailverification@gmail.com',
+    to: user.email,
+    subject: 'Verification email',
+    html: `Thank you for verifying mail`
+  })
+
+  res.status(201).json({
+    message: 'Email verified',
+    user: user
+  })
+}
+
 
 
 module.exports = {
@@ -193,6 +259,6 @@ module.exports = {
   updateUserProfile,
   getUserProfile,
   forgotPassword,
-  resetPassword
+  resetPassword, verifyEmail
 }
 

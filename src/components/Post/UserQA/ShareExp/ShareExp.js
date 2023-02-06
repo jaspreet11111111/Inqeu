@@ -18,7 +18,7 @@ const ShareExpDialog = () => {
 	const [postData, setPostData] = useState({
 		description: '',
 		username: user?.name
-	})
+	});
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
 	const handleClickOpen = () => {

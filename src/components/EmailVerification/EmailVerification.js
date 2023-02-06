@@ -1,43 +1,63 @@
-import { Button, Typography } from '@mui/material'
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Button, InputBase, Typography, Stack, Card } from '@mui/material'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { generateOtp } from '../../actions/otp'
+import { USER_OTP_SUCCESS } from '../../constants/actionType';
 
 const EmailVerification = () => {
-	const [validUrl, setValidUrl] = useState(false);
-	const params = useParams()
+	const userInfo = useSelector(state => state.userRegister);
+	console.log("userOTP:", userInfo);
 
-	useEffect(() => {
-		const verifyUrl = async () => {
-			try {
-				const url = `http://localhost:3000/api/v1/user/${ params.id }/verify/${ params.token }`;
+	const userOTP = useSelector(state => state.otpGen);
+	console.log(userOTP)
+	const [formData, setFormData] = useState({
+		otp: '',
+		userId: userInfo.user._id
+	});
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-				const { data } = await axios.get(url);
-				console.log(data);
-				setValidUrl(true)
-			} catch (error) {
-				console.log(error);
-				setValidUrl(false);
-			}
-		}
+	const handleSub = (e) => {
+		e.preventDefault();
+		console.log('success otp')
 
-		verifyUrl();
-	}, [params])
+		dispatch(generateOtp())
+		console.log('success otp');
+		console.log('otpForm:', formData)
+	}
+
 	return (
-		<>
-			{validUrl ? (
-				<>
-					<Typography>
-						'Email verified successfully'
-					</Typography>
-					<Link to='/auth'>
-						<Button>
-							Login
-						</Button>
-					</Link>
-				</>
-			) : '404 NOT FOUND'}
-		</>
+		<Card>
+			<Typography>Please verify OTP</Typography>
+			<form onSubmit={handleSub}>
+				<Stack
+					bgcolor="#ffff"
+					direction="row"
+					border="1px solid rgba(0, 0, 0, 0.12)"
+					sx={{
+						width: '100%',
+						height: '48px',
+						borderRadius: '10px',
+						marginBottom: '24px'
+					}}>
+					{/* <PersonIcon sx={{
+						color: '#880ED4',
+						padding: '12px 20px'
+					}} /> */}
+					<InputBase
+						placeholder='Username'
+						name='username'
+						onChange={e => setFormData({ ...formData, otp: e.target.value, userId: userInfo?.user._id })}
+						autoFocus={true}
+						fullWidth
+						required={true}
+						aria-label='Username'
+					/>
+				</Stack>
+				<Button type='submit'>Submit</Button>
+			</form>
+		</Card>
 	)
 }
 

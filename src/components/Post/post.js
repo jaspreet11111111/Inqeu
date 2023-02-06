@@ -7,7 +7,7 @@ import PostCards from './PostCards/PostCards';
 import Select from './Select/Select';
 import UserQA from './UserQA/UserQA';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPosts, listPosts } from '../../actions/posts';
+import { listPosts } from '../../actions/posts';
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,6 @@ const Post = () => {
   useEffect(() => {
     dispatch(listPosts());
   }, [])
-
   let reversePosts = [...posts].reverse();
   console.log(reversePosts)
   const data = useSelector(state => state.postList)

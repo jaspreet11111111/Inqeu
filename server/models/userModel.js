@@ -6,7 +6,7 @@ const crypto = require('crypto')
 const userSchema = mongoose.Schema({
   name: {
     type: String,
-    // required: [true, 'Must have username']
+    required: [true, 'Must have username']
   },
   email: {
     type: String,
@@ -32,9 +32,6 @@ const userSchema = mongoose.Schema({
   },
   passwordChangedAt: {
     Date
-  },
-  id: {
-    type: String
   },
   verified: {
     type: Boolean,

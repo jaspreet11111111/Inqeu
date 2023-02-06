@@ -47,7 +47,6 @@ export const signup = (formData, navigate) => async (dispatch) => {
 				'Content-Type': 'application/json',
 			},
 		}
-
 		const { data } = await axios.post('/api/v1/user/signup', formData, config);
 		console.log("authwalSignup", data)
 		dispatch({
@@ -59,9 +58,8 @@ export const signup = (formData, navigate) => async (dispatch) => {
 			type: USER_LOGIN_SUCCESS,
 			payload: data,
 		})
-
-		localStorage.setItem('profile', JSON.stringify(data));
-		navigate('/');
+		// localStorage.setItem('profile', JSON.stringify(data));
+		navigate('/verify');
 	} catch (error) {
 		dispatch({
 			type: USER_REGISTER_FAIL,

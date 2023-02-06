@@ -52,7 +52,7 @@ function App () {
             <Route path="/profile" element={<Profile />} />
           </Routes>
           <Routes>
-            <Route path='api/v1/user/:id/verify/:token' element={EmailVerification} />
+            <Route path='/verify' element={<EmailVerification />} />
           </Routes>
         </div>
         <Footer />
