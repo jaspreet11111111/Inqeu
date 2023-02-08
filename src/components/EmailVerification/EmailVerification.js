@@ -27,8 +27,19 @@ const EmailVerification = () => {
 
 
 	return (
-		<Card>
-			<Typography>Please verify OTP</Typography>
+		<Card sx={{
+			width: {
+				xs: '95%',
+				sm: '95%',
+				md: '50%',
+				lg: '40%'
+			},
+			margin: 'auto',
+			padding: '2em',
+			marginTop: '2em',
+			marginBottom: '2em'
+		}}>
+			<Typography fontSize='24px'>Please verify OTP</Typography>
 			<form onSubmit={handleSub}>
 				<Stack
 					bgcolor="#ffff"

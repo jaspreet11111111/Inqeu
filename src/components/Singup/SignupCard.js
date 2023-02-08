@@ -51,7 +51,7 @@ const SignupCard = () => {
       dispatch(signin(formData, navigate))
     }
     else {
-      toast.success("Signup success", {
+      toast.success("OTP sent to your email id", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -229,7 +229,7 @@ const SignupCard = () => {
                   <input type='checkbox' placeholder='Keep me sign in' />
                   Keep me sign in
                 </Box>
-                <Link className='forgot_link'>
+                <Link className='forgot_link' to='/verify'>
                   Forgot Password ?
                 </Link>
               </Stack>
