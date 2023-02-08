@@ -200,12 +200,12 @@ const Navbar = () => {
               <Box className='navbar_profile'>
                 <Button onClick={handleShowProfileMenu}>
                   <Typography className='user_profileImage'>
-                    {user.name.substring(0, 1)}
+                    {/* {user.name.substring(0, 1)} */}
                   </Typography>
                 </Button>
                 <Stack>
                   <Typography variant='p' fontSize='16px' fontWeight='500'>
-                    {user.name}
+                    {/* {user.name} */}
                   </Typography>
                   <Typography variant='p' fontSize='10px' fontWeight='300'>
                     {/* {user.user.email} */}
@@ -225,7 +225,7 @@ const Navbar = () => {
                           {user.user.name.substring(0, 1)}
                         </Typography> */}
                         <Typography variant='p' fontSize='16px' fontWeight='500'>
-                          {user.name}
+                          {/* {user.name} */}
                         </Typography>
                       </Link>
                     </Stack>

@@ -22,11 +22,9 @@ const signin = asyncHandler(async (req, res) => {
 
   if (user) {
     res.json({
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      _id: user._id,
+      name: user.name,
+      email: user.email,
       token: generateToken(user._id),
     })
   }
@@ -95,9 +93,15 @@ const signup = asyncHandler(async (req, res) => {
   }
 })
 
-const forgotPassword = asyncHandler(async (req, res, next) => {
+const forgotPassword = async (req, res, next) => {
   // get user based on email
-  const user = await User.findOne({ email: req.body.email })
+  const { email } = req.body;
+  if (!email) {
+    res.json({
+      message: 'Provide valid email id'
+    })
+  }
+  const user = await User.findOne({ email: email })
 
   if (!user) {
     throw new Error('No user found with this is email id', 404)
@@ -108,7 +112,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
   await user.save({ vaidateBeforeSave: false })
   // send back to user's mail
 
-})
+}
 const resetPassword = (req, res, next) => {
 
 }
