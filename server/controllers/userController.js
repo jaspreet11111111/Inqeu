@@ -18,8 +18,6 @@ const generateToken = id => {
 const signin = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email }).select('+password');
-  console.log("user:", user);
-
   if (user) {
     res.json({
       _id: user._id,
@@ -33,14 +31,14 @@ const signin = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
   } else {
     res.status(401)
-    throw new Error('Invalid email or password')
+    res.json({
+      message: 'Invalid email or password'
+    })
   }
-
 })
 
 const signup = asyncHandler(async (req, res) => {
@@ -49,6 +47,9 @@ const signup = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(400)
+    res.json({
+      message: 'User already exists'
+    })
     throw new Error('User already exists')
   }
 
@@ -89,6 +90,9 @@ const signup = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(400)
+    res.json({
+      message: 'Invalid user data'
+    })
     throw new Error('Invalid user data')
   }
 })
@@ -129,9 +133,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(404)
+    res.json({
+      message: 'User not found'
+    })
     throw new Error('User not found')
   }
 })
+
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findOne({ _id: new mongoose.Types.ObjectId(req.user._id) })

@@ -5,7 +5,6 @@ const generateOtp = () => {
 		const randomVal = Math.round(Math.random() * 9);
 		otp = otp + randomVal;
 	}
-
 	return otp
 }
 

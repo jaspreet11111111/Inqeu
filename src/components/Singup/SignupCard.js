@@ -2,7 +2,7 @@ import { Paper, Grid, Card, Stack, Typography, InputBase, Checkbox, Box, Button 
 import MailIcon from '@mui/icons-material/Mail';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import "./styles.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { signin, signup } from '../../actions/auth';
@@ -26,18 +26,24 @@ const initialState = {
 }
 const SignupCard = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState('')
   const dispatch = useDispatch();
   const clientId = '96998420895-cd2gslmhocm4dui889a0pl2807j46f7r.apps.googleusercontent.com'
   const [IsSignUp, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const userRegister = useSelector(state => state.userRegister)
+  const userLogin = useSelector(state => state.userLogin);
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const { loading, error, userInfo } = userRegister;
+  console.log("registerError:", error);
+  const loginError = userLogin.error;
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!IsSignUp) {
-      toast.success("Login successful", {
+    if (error || loginError) {
+      toast.error(error || loginError, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -47,24 +53,35 @@ const SignupCard = () => {
         progress: undefined,
         theme: "light",
       })
-      setMessage('Message')
-      dispatch(signin(formData, navigate))
     }
     else {
-      toast.success("OTP sent to your email id", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      dispatch(signup(formData, navigate));
-      navigate('/verify')
+      if (!IsSignUp) {
+        toast.success("Login successful", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        dispatch(signin(formData, navigate));
+      }
+      else {
+        toast.success("OTP sent to your email id", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        dispatch(signup(formData, navigate));
+      }
     }
-    console.log("formdata:", formData)
   }
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {

@@ -53,10 +53,9 @@ userSchema.pre('save', async function(next) {
 })
 
 userSchema.methods.correctPassword = async function(
-  candidatePassword,
-  userPassword
+  password
 ) {
-  return await bcrypt.compare(candidatePassword, userPassword);
+  return await bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.changePasswordAfter = function(JWT_timestapms) {
