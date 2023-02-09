@@ -68,3 +68,26 @@ export const signup = (formData, navigate) => async (dispatch) => {
 		})
 	}
 }
+export const resetPassword = (email, newPassword, resetPasswordToken) => {
+	return (dispatch) => {
+		dispatch({ type: RESET_PASSWORD_REQUEST });
+		axios
+			.post('/api/reset-password', {
+				email,
+				newPassword,
+				resetPasswordToken,
+			})
+			.then((response) => {
+				dispatch({
+					type: RESET_PASSWORD_SUCCESS,
+					payload: response.data,
+				});
+			})
+			.catch((error) => {
+				dispatch({
+					type: RESET_PASSWORD_FAILURE,
+					payload: error.message,
+				});
+			});
+	};
+};

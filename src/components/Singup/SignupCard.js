@@ -260,7 +260,7 @@ const SignupCard = () => {
                   <input type='checkbox' placeholder='Keep me sign in' />
                   Keep me sign in
                 </Box>
-                <Link className='forgot_link' to='/verify'>
+                <Link className='forgot_link' to='/resetPassword'>
                   Forgot Password ?
                 </Link>
               </Stack>

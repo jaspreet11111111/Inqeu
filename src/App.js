@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLayoutEffect } from 'react';
 import EmailVerification from "./components/EmailVerification/EmailVerification";
+import ResetPasswordForm from "./components/ResetForm";
 
 const Wrapper = ({ children }) => {
   const location = useLocation();
@@ -53,6 +54,9 @@ function App () {
           </Routes>
           <Routes>
             <Route path='/verify' element={<EmailVerification />} />
+          </Routes>
+          <Routes>
+            <Route path="/resetPassword" element={<ResetPasswordForm />} />
           </Routes>
         </div>
         <Footer />
