@@ -27,23 +27,21 @@ const initialState = {
 const SignupCard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const clientId = '96998420895-cd2gslmhocm4dui889a0pl2807j46f7r.apps.googleusercontent.com'
   const [IsSignUp, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const userRegister = useSelector(state => state.userRegister)
   const userLogin = useSelector(state => state.userLogin);
-
-  const [errorMessage, setErrorMessage] = useState('');
   const { loading, error, userInfo } = userRegister;
-  console.log("registerError:", error);
   const loginError = userLogin.error;
+  console.log(error || loginError)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const handleSubmit = (e) => {
+    console.log(formData)
     e.preventDefault();
-    if (error || loginError) {
-      toast.error(error || loginError, {
+    if (formData.confirmPassword !== formData.password) {
+      toast.error('Check your password', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -55,21 +53,37 @@ const SignupCard = () => {
       })
     }
     else {
-      if (!IsSignUp) {
-        toast.success("Login successful", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        dispatch(signin(formData, navigate));
+      if ({ IsSignUp } ? (formData.email && formData.password && formData.username && formData.confirmPassword) : (formData.email && formData.password)) {
+        if (!IsSignUp) {
+          toast.success("Login successful", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          })
+          dispatch(signin(formData, navigate));
+        }
+
+        else {
+          toast.success("OTP sent to your email id", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          })
+          dispatch(signup(formData, navigate));
+        }
       }
       else {
-        toast.success("OTP sent to your email id", {
+        toast.error('Provide valid information', {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -79,9 +93,10 @@ const SignupCard = () => {
           progress: undefined,
           theme: "light",
         })
-        dispatch(signup(formData, navigate));
       }
     }
+
+
   }
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
@@ -98,7 +113,6 @@ const SignupCard = () => {
 
     try {
       dispatch({ type: 'AUTH', data: { user, token } });
-      // redirect to home page
       navigate('/')
     }
     catch (err) {
@@ -205,7 +219,7 @@ const SignupCard = () => {
                 </Button>
               </Stack>
               <Typography fontSize='12px' color='red' textAlign='left'>
-                Password must have 8 charecters
+                {formData.password.length < 8 ? 'Password must have 8 charecters' : ''}
               </Typography>
               {IsSignUp && (
                 <>
@@ -233,7 +247,7 @@ const SignupCard = () => {
                       name='confirmPassword' />
                   </Stack>
                   <Typography fontSize='12px' color='red' textAlign='left'>
-                    Password must be same
+                    {(formData.password !== formData.confirmPassword) ? 'Password must be same' : ''}
                   </Typography>
                 </>
               )}
@@ -272,7 +286,7 @@ const SignupCard = () => {
             </Typography>
             <Stack className='otherSigninOption_container'>
               <GoogleLogin
-                clientId={clientId}
+                // clientId={clientId}
                 render={(renderProps) => (
                   <Button className='signin_option' sx={{
                     color: 'black',

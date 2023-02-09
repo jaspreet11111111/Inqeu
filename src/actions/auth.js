@@ -34,11 +34,12 @@ export const signin = (formData, navigate) => async (dispatch) => {
 	}
 }
 export const signup = (formData, navigate) => async (dispatch) => {
+	console.log('Hello2')
 	try {
 		dispatch({
 			type: USER_REGISTER_REQUEST,
 		})
-
+		console.log('Hello')
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -57,6 +58,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
 		})
 		navigate('/verify');
 	} catch (error) {
+		console.log(error)
 		dispatch({
 			type: USER_REGISTER_FAIL,
 			payload:

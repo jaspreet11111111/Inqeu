@@ -12,12 +12,11 @@ const ShareExpDialog = () => {
 	const navigate = useNavigate();
 	const { userInfo } = useSelector(state => state.userLogin);
 	const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
-	const user = userInfo?.user
 	console.log(userInfo)
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
 		description: '',
-		username: user?.name
+		username: userInfo?.name
 	});
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
