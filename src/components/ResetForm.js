@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { resetPassword } from '../actions/auth';
 
 const ResetPasswordForm = () => {
@@ -8,9 +9,10 @@ const ResetPasswordForm = () => {
   const [resetPasswordToken, setResetPasswordToken] = useState('');
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(resetPassword(email, newPassword, resetPasswordToken));
+    dispatch(resetPassword(email, newPassword, resetPasswordToken, navigate));
   };
 
   return (

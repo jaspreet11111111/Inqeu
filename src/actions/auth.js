@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_LOGIN_FAIL } from "../constants/actionType";
+import { USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_LOGIN_FAIL, RESET_PASSWORD_FAILURE, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS } from "../constants/actionType";
 
 export const signin = (formData, navigate) => async (dispatch) => {
 	try {
@@ -68,7 +68,7 @@ export const signup = (formData, navigate) => async (dispatch) => {
 		})
 	}
 }
-export const resetPassword = (email, newPassword, resetPasswordToken) => {
+export const resetPassword = (email, newPassword, resetPasswordToken, navigate) => {
 	return (dispatch) => {
 		dispatch({ type: RESET_PASSWORD_REQUEST });
 		axios
@@ -82,6 +82,7 @@ export const resetPassword = (email, newPassword, resetPasswordToken) => {
 					type: RESET_PASSWORD_SUCCESS,
 					payload: response.data,
 				});
+				navigate('/signin')
 			})
 			.catch((error) => {
 				dispatch({
