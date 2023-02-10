@@ -10,7 +10,6 @@ const nodemailer = require('nodemailer')
 const path = require('path');
 const { generateOtp } = require('../utils/email');
 const { mailTransport } = require('../utils/email');
-const { use } = require('../app');
 const generateToken = id => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 }
@@ -117,11 +116,13 @@ const forgotPassword = async (req, res, next) => {
   // send back to user's mail
 
 }
+
+
 const resetPassword = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
   const { email, password } = req.body;
 

@@ -1,4 +1,9 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+
+
+
+
 const generateOtp = () => {
 	let otp = '';
 	for (let i = 0; i <= 3; i++) {
@@ -8,14 +13,15 @@ const generateOtp = () => {
 	return otp
 }
 
+
 const mailTransport = () => {
 	console.log('Mail sent')
 	const mailSent = nodemailer.createTransport({
-		host: "sandbox.smtp.mailtrap.io",
-		port: 25,
+		service: "gmail",
+		host: 'smtp.gmail.com',
 		auth: {
-			user: "fd82e4109f5e19",
-			pass: "d43a4917459e78"
+			user: process.env.USER,
+			pass: process.env.PASS
 		}
 	});
 	return mailSent

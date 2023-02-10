@@ -40,8 +40,8 @@ const SignupCard = () => {
   const handleSubmit = (e) => {
     console.log(formData)
     e.preventDefault();
-    if (formData.confirmPassword !== formData.password) {
-      toast.error('Check your password', {
+    if (error || loginError) {
+      toast.error(error || loginError, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -54,33 +54,18 @@ const SignupCard = () => {
     }
     else {
       if ({ IsSignUp } ? (formData.email && formData.password && formData.username && formData.confirmPassword) : (formData.email && formData.password)) {
-        if (!IsSignUp) {
-          toast.success("Login successful", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          })
-          dispatch(signin(formData, navigate));
-        }
+        toast.success("OTP sent to your email id", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        dispatch(signup(formData, navigate));
 
-        else {
-          toast.success("OTP sent to your email id", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          })
-          dispatch(signup(formData, navigate));
-        }
       }
       else {
         toast.error('Provide valid information', {
@@ -94,6 +79,20 @@ const SignupCard = () => {
           theme: "light",
         })
       }
+      if (!IsSignUp) {
+        toast.success("Login successful", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        dispatch(signin(formData, navigate));
+      }
+
     }
 
 

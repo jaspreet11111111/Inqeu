@@ -21,7 +21,7 @@ const EmailVerification = () => {
 
 	const handleSub = (e) => {
 		e.preventDefault();
-		dispatch(generateOtp({ ...formData, userId: userInfo.userInfo.user._id, some: 'some', loda: 'jaspreet' }, navigate))
+		dispatch(generateOtp({ ...formData, userId: userInfo.userInfo.user._id }, navigate))
 	}
 	return (
 		<>
