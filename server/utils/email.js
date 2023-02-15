@@ -20,7 +20,7 @@ const mailTransport = () => {
 		service: "gmail",
 		host: 'smtp.gmail.com',
 		auth: {
-			user: 'maheshwariansh720@gmail.com',
+			user: process.env.USER,
 			pass: process.env.PASS
 		}
 	})
