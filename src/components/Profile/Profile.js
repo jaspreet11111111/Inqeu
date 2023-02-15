@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserDetails, updateUserProfile, updateUser, deleteUser } from '../../actions/userAction';
 import { USER_UPDATE_PROFILE_RESET } from '../../constants/actionType';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Delete from './Delete';
 
 const Profile = () => {
   const [user1, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -22,11 +22,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails;
-  console.log("user:", user)
 
   const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
-
+  const { userInfo } = userLogin;
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
@@ -39,7 +37,6 @@ const Profile = () => {
         dispatch(getUserDetails('profile'));
       } else {
         setName(user.name)
-        console.log(user.name)
         setEmail(user.email)
       }
     }
@@ -60,10 +57,6 @@ const Profile = () => {
     })
     setName('');
     setEmail('');
-  }
-
-  const deleteHandler = () => {
-    dispatch(deleteUser(userInfo._id, navigate))
   }
 
   return (
@@ -113,7 +106,7 @@ const Profile = () => {
                   <ShareIcon />
                   Share Profile
                 </Button>
-                <Button variant='outlined'
+                {/* <Button variant='outlined'
                   onClick={deleteHandler}
                   sx={{
                     borderColor: "#880ED4",
@@ -125,7 +118,8 @@ const Profile = () => {
                     color: '#880ED4'
                   }} />
                   Delete Profile
-                </Button>
+                </Button> */}
+                <Delete id={userInfo._id} />
               </Stack>
             </Stack>
           </Stack>

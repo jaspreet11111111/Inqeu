@@ -1,9 +1,8 @@
 import { Button, Dialog, DialogContent, Typography, DialogTitle, DialogActions, Stack } from '@mui/material';
 import React, { useState } from 'react';
 import SortIcon from '@mui/icons-material/Sort';
-import "../../styles.css";
+import '../../styles.css'
 import { useDispatch, useSelector } from 'react-redux';
-import e from 'cors';
 import { createPost } from '../../../../actions/posts';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +11,12 @@ const ShareExpDialog = () => {
 	const navigate = useNavigate();
 	const { userInfo } = useSelector(state => state.userLogin);
 	const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
-	console.log(userInfo)
+	const parsedData = JSON.parse(userLocal);
+	console.log("local storage", parsedData);
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
 		description: '',
-		username: userInfo?.name
+		username: parsedData?.name
 	});
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const ShareExpDialog = () => {
 	}
 
 	const postCreate = useSelector((state) => state.postCreated);
+	console.log(postCreate);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (userLocal !== null) {
@@ -47,6 +48,7 @@ const ShareExpDialog = () => {
 				theme: "light",
 			});
 			handleClose();
+			window.location.reload();
 		}
 		else {
 			navigate('/auth')
@@ -95,7 +97,6 @@ const ShareExpDialog = () => {
 						color: '#880ED4',
 						padding: '24px'
 					}} onClose={handleClose}>
-						{!isActive ? 'Share Experience' : 'Ask Question'}
 					</Typography>
 					<Stack width='100%' direction='row' justifyContent='center'
 						sx={{
@@ -106,26 +107,37 @@ const ShareExpDialog = () => {
 							}
 						}}>
 						<Button variant={isActive ? 'contained' : 'outlined'} sx={{
-							marginLeft: '1em',
+							margin: '16px',
 							width: {
 								xs: '90%',
 								sm: '100%',
 								md: '200px',
 								lg: '250px'
-							}
+							},
+							backgroundColor: isActive ? '#694ED6' : 'white',
+							borderRadius: '10px',
+							color: isActive ? '' : '#694ED6',
+							border: isActive ? '' : '1px solid #694ED6',
+							textTransform: 'initial'
+
 						}}
-							className={isActive ? 'activeBtn' : 'nonActiveBtn'}
+							className={isActive ? 'activeBtn' : 'nonActiveBtn '}
 							onClick={handleSwitch}>
 							Ask Question
 						</Button>
 						<Button variant={!isActive ? 'contained' : 'outlined'} sx={{
-							marginRight: '1em',
+							margin: '16px',
 							width: {
 								xs: '90%',
 								sm: '100%',
 								md: '200px',
 								lg: '250px'
-							}
+							},
+							backgroundColor: !isActive ? '#694ED6' : 'white',
+							borderRadius: '10px',
+							color: !isActive ? '' : '#694ED6',
+							border: !isActive ? '' : '1px solid #694ED6',
+							textTransform: 'initial'
 						}}
 							className={!isActive ? 'activeBtn' : 'nonActiveBtn'}
 							onClick={handleSwitch}>

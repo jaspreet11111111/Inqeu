@@ -3,8 +3,13 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { deleteUser } from '../../actions/userAction';
-const Delete = (props) => {
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+const Delete = ({ id }) => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
@@ -13,6 +18,11 @@ const Delete = (props) => {
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	const deleteHandler = () => {
+		dispatch(deleteUser(id, navigate));
+		setOpen(true)
+	}
 
 	return (
 		<div>
@@ -40,7 +50,7 @@ const Delete = (props) => {
 				</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleClose} color='success' autoFocus>Disagree</Button>
-					<Button onClick={props.delete} color='error'>
+					<Button onClick={deleteHandler} color='error'>
 						Agree
 					</Button>
 				</DialogActions>

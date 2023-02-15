@@ -20,10 +20,10 @@ const mailTransport = () => {
 		service: "gmail",
 		host: 'smtp.gmail.com',
 		auth: {
-			user: process.env.USER,
+			user: 'maheshwariansh720@gmail.com',
 			pass: process.env.PASS
 		}
-	});
+	})
 	return mailSent
 }
 module.exports = { generateOtp, mailTransport }

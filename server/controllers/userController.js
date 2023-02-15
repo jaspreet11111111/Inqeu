@@ -194,7 +194,22 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       user.password = req.body.password
     }
 
+    const OTP = generateOtp();
+    const verificationToken = new Token({
+      owner: user._id,
+      token: OTP
+    })
+    console.log("otp:", OTP)
+
+    await verificationToken.save();
     const updatedUser = await user.save()
+
+    mailTransport().sendMail({
+      from: 'emailverification@gmail.com',
+      to: user.email,
+      subject: 'Update email',
+      html: `<p>Please verify mail to update email</p><h1>${ OTP }</h1>`
+    })
     console.log(updatedUser)
     res.json({
       user: {
@@ -212,9 +227,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id)
-  console.log(req.params.id)
-
+  const user = await User.findById(req.params.id);
   if (user) {
     await user.remove()
     res.json({ message: 'User removed' })
@@ -232,7 +245,22 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
 
+    const OTP = generateOtp();
+    const verificationToken = new Token({
+      owner: user._id,
+      token: OTP
+    })
+    console.log("otp:", OTP)
+
+    await verificationToken.save();
     const updatedUser = await user.save()
+
+    mailTransport().sendMail({
+      from: 'emailverification@gmail.com',
+      to: user.email,
+      subject: 'Update email',
+      html: `<p>Please verify mail to update email</p><h1>${ OTP }</h1>`
+    })
 
     res.json({
       _id: updatedUser._id,

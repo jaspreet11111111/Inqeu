@@ -11,19 +11,14 @@ import { listPosts } from '../../actions/posts';
 
 const Post = () => {
   const dispatch = useDispatch();
-  let { posts } = useSelector(state => state.postList);
-  console.log(posts)
   useEffect(() => {
     dispatch(listPosts());
-  }, [])
+  }, []);
+  let { posts } = useSelector(state => state.postList);
+  console.log(posts)
   let reversePosts = [...posts].reverse();
-  console.log(reversePosts)
-  const data = useSelector(state => state.postList)
-  console.log('postsData:', data);
-
   const userData = useSelector(state => state.userLogin);
   console.log(userData)
-  // let postsData = data[0].data.posts
   return (
     <Paper className='post_container'
       sx={{

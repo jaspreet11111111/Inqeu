@@ -21,7 +21,7 @@ app.use('/api/v1/query', queryRouter);
 app.use('/api/reset-password', passwordRoute)
 
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../public', "index.html"))
+	res.sendFile(path.resolve(__dirname, '../build', "index.html"))
 });
 
 module.exports = app

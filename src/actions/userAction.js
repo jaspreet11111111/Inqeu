@@ -79,14 +79,24 @@ export const deleteUser = (id, navigate) => async (dispatch, getState) => {
 				Authorization: `Bearer ${ userInfo.token }`,
 			},
 		}
-
-		await axios.delete(`http://localhost:8000/api/v1/user/${ id }`, config)
+		await axios.delete(`/api/v1/user/${ id }`, config)
 
 		dispatch({ type: USER_DELETE_SUCCESS })
-
-		navigate('/auth')
+		navigate('/auth');
+		localStorage.clear();
 	} catch (error) {
 		console.log(error)
+		const message =
+			error.response && error.response.data.message
+				? error.response.data.message
+				: error.message
+		if (message === 'Not authorized, token failed') {
+			dispatch(logout())
+		}
+		dispatch({
+			type: USER_DELETE_FAIL,
+			payload: message,
+		})
 	}
 }
 
@@ -149,13 +159,9 @@ export const updateUser = (user) => async (dispatch, getState) => {
 				Authorization: `Bearer ${ userInfo.token }`,
 			},
 		}
-
 		const { data } = await axios.put(`/ api / v1 / user / ${ user._id }`, user, config)
-
 		dispatch({ type: USER_UPDATE_SUCCESS })
-
 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
-
 		dispatch({ type: USER_DETAILS_RESET })
 	} catch (error) {
 		const message =

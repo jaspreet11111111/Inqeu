@@ -4,7 +4,8 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonIcon from '@mui/icons-material/Person';
 import SortIcon from '@mui/icons-material/Sort';
-import MapImage from "../../assets/images/Map.jpg"
+import MapImage from "../../assets/images/Map.jpg";
+import Map from './Maps'
 import "./styles.css";
 import { useDispatch } from 'react-redux';
 import { createQuery } from '../../../actions/query';
@@ -222,8 +223,8 @@ const Contact = () => {
             }} >
             Reach out
           </Typography>
-          <Box>
-            <img src={MapImage} alt='address' className='mapImage' />
+          <Box className='mapImage'>
+            <Map />
           </Box>
           <Typography variant='p'>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
