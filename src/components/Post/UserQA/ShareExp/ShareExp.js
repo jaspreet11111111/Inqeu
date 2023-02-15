@@ -16,7 +16,7 @@ const ShareExpDialog = () => {
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
 		description: '',
-		username: parsedData?.name
+		username: userInfo?.name
 	});
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const ShareExpDialog = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (userLocal !== null) {
-			dispatch(createPost(postData))
+			dispatch(createPost(postData));
 			toast.success('Post added successfully', {
 				position: "top-center",
 				autoClose: 5000,
@@ -48,7 +48,6 @@ const ShareExpDialog = () => {
 				theme: "light",
 			});
 			handleClose();
-			window.location.reload();
 		}
 		else {
 			navigate('/auth')
