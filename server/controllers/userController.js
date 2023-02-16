@@ -40,6 +40,7 @@ const signin = asyncHandler(async (req, res) => {
   }
 })
 
+
 const signup = asyncHandler(async (req, res) => {
   const { username, email, password, confirmPassword } = req.body
   let userExists = await User.findOne({ email: email })
