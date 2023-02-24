@@ -9,7 +9,7 @@ import Getapp from '../elements/GetApp/Getapp';
 
 const EmailVerification = () => {
 	const userInfo = useSelector(state => state.userRegister);
-	console.log("userOTP:", userInfo);
+	// console.log("userOTP:", userInfo);
 
 	const userOTP = useSelector(state => state.otpGen);
 	const [formData, setFormData] = useState({

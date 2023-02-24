@@ -6,6 +6,7 @@ const postRouter = require('./routes/postRoute');
 const userRouter = require('./routes/userRoute');
 const queryRouter = require('./routes/queryRoute');
 const passwordRoute = require('./routes/passwordResetRoute')
+const historyRoute = require('./routes/historyRoute')
 const { auth } = require('./middleware/auth');
 const path = require('path');
 
@@ -19,6 +20,7 @@ app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/query', queryRouter);
 app.use('/api/reset-password', passwordRoute)
+app.use('/api/v1/history', historyRoute)
 
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../build', "index.html"))

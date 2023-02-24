@@ -37,6 +37,7 @@ const signin = asyncHandler(async (req, res) => {
     res.json({
       message: 'Invalid email or password'
     })
+    throw new Error('Invalid user email or password')
   }
 })
 
@@ -138,9 +139,7 @@ const resetPassword = async (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-
     user.password = await bcrypt.hash(password, salt);
-
     await user.save();
 
     const payload = {
@@ -187,7 +186,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findOne({ _id: new mongoose.Types.ObjectId(req.user._id) })
-  console.log("user", req)
   if (user) {
     user.name = req.body.username || user.username
     user.email = req.body.email || user.email
@@ -211,7 +209,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       subject: 'Update email',
       html: `<p>Please verify mail to update email</p><h1>${ OTP }</h1>`
     })
-    console.log(updatedUser)
     res.json({
       user: {
         _id: updatedUser._id,
@@ -289,7 +286,6 @@ const verifyEmail = async (req, res) => {
     })
   }
   const user = await User.findById(userId);
-  console.log(user)
   if (!user) {
     res.status(500).json({
       message: 'Invalid user'
@@ -331,6 +327,19 @@ const verifyEmail = async (req, res) => {
     message: 'Email verified',
     user: user
   })
+}
+
+const postHistory = async (req, res) => {
+  try {
+
+  }
+  catch (err) {
+    res.status(500).json(
+      {
+        message: 'Failed to add history'
+      }
+    )
+  }
 }
 
 

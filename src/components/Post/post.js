@@ -15,10 +15,10 @@ const Post = () => {
     dispatch(listPosts());
   }, []);
   let { posts } = useSelector(state => state.postList);
-  console.log(posts)
+  // console.log(posts)
   let reversePosts = [...posts].reverse();
   const userData = useSelector(state => state.userLogin);
-  console.log(userData)
+  // console.log(userData)
   return (
     <Paper className='post_container'
       sx={{

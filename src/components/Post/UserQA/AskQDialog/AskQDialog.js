@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../../../../actions/posts';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { addHistory } from '../../../../actions/history';
 
 const ShareExpDialog = () => {
   const navigate = useNavigate();
   const { userInfo } = useSelector(state => state.userLogin);
   const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
-  console.log(userInfo)
+  // console.log(userInfo)
   const [open, setOpen] = useState(false);
   const [postData, setPostData] = useState({
     description: '',
@@ -30,12 +31,20 @@ const ShareExpDialog = () => {
     setOpen(true)
   }
 
+  const [historyData, setHistoryData] = useState({
+    message: 'You added new question',
+    userId: userInfo?._id,
+    action: 'added'
+    // postId: ''
+  });
+  console.log(historyData)
   const postCreate = useSelector((state) => state.postCreated);
-  console.log(postCreate);
+  // console.log(postCreate);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userLocal !== null) {
       dispatch(createPost(postData))
+      dispatch(addHistory(historyData))
       toast.success('Question added successfully', {
         position: "top-center",
         autoClose: 5000,

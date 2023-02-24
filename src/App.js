@@ -58,6 +58,9 @@ function App () {
           <Routes>
             <Route path="/resetPassword" element={<ResetPasswordForm />} />
           </Routes>
+          <Routes>
+            <Route path="/search/:keyword" element={<Post />} />
+          </Routes>
         </div>
         <Footer />
       </div>

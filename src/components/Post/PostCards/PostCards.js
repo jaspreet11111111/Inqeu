@@ -2,12 +2,28 @@ import { Box, Button, InputBase, Stack, TextField, Typography } from '@mui/mater
 import React, { useState } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import '../styles.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHistory } from '../../../actions/history';
+import { likePosts } from '../../../actions/posts'
+import { addLikeHistory } from '../../../actions/history';
 const PostCards = ({ data }) => {
-  // console.log("postCard_data:", data);
+  const dispatch = useDispatch()
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+
+  const userLogin = useSelector(state => state.userLogin);
+  // const likeData = {
+  //   userId: userLogin.userInfo._id,
+  //   action: 'liked',
+  //   postId: data?._id,
+  //   message: 'You liked this post'
+  // }
+  // console.log(data);
   const likeHandler = () => {
     setLike(!like);
+    // dispatch(likePosts(data?.id))
+    // dispatch(addLikeHistory(likeData))
+
   }
   return (
     <Box>

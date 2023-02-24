@@ -1,8 +1,4 @@
 const nodemailer = require('nodemailer');
-const { google } = require("googleapis");
-
-
-
 
 const generateOtp = () => {
 	let otp = '';
@@ -12,8 +8,6 @@ const generateOtp = () => {
 	}
 	return otp
 }
-
-
 const mailTransport = () => {
 	console.log('Mail sent')
 	const mailSent = nodemailer.createTransport({

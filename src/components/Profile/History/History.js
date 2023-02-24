@@ -1,7 +1,19 @@
 import { Typography, List, ListItem } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { listHistory } from '../../../actions/history';
 import '../styles.css';
+
 const History = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(listHistory())
+	}, [])
+
+	const activities = useSelector(state => state.activity);
+	const activity = activities?.activity?.history
+
 	return (
 		<>
 			<Typography variant='h4' sx={{
@@ -12,24 +24,26 @@ const History = () => {
 			}}>
 				Last Activities
 			</Typography>
-			<List className='historyList'>
-				<ListItem className='historyItem'>
-					<Typography>30 December</Typography>
-					<Typography sx={{
-						fontSize: '12px',
-						fontWeight: '500',
-						marginLeft: '32px'
-					}}>You searched for 'What is life'</Typography>
-				</ListItem>
-				<ListItem className='historyItem_alternative'>
-					<Typography>30 December</Typography>
-					<Typography sx={{
-						fontSize: '12px',
-						fontWeight: '500',
-						marginLeft: '32px'
-					}}>You searched for 'What is life'</Typography>
-				</ListItem>
-			</List>
+			{activity && activity.map((item) => {
+				const date = new Date(item.timestamp);
+				const dateString = date.toLocaleDateString('en-US', {
+					year: 'numeric',
+					month: 'short',
+					day: 'numeric'
+				});
+				return (
+					<List className='historyList' key={item.id}>
+						<ListItem className='historyItem'>
+							<Typography>{dateString}</Typography>
+							<Typography sx={{
+								fontSize: '12px',
+								fontWeight: '500',
+								marginLeft: '32px'
+							}}>{item.message}</Typography>
+						</ListItem>
+					</List>
+				)
+			})}
 		</>
 	)
 }

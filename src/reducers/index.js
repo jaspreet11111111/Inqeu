@@ -3,6 +3,7 @@ import { postCreateReducer, postListReducer } from './post';
 import auth, { userLoginReducer, userRegisterReducer } from './auth';
 import { userDetailsReducer, userUpdateProfileReducer } from './userReducer'
 import { userOTPReducer } from './otp';
+import historyReducer from './history';
 export default combineReducers({
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
@@ -11,5 +12,6 @@ export default combineReducers({
     userLogin: userLoginReducer,
     postList: postListReducer,
     postCreated: postCreateReducer,
-    otpGen: userOTPReducer
+    otpGen: userOTPReducer,
+    activity: historyReducer
 })

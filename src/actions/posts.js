@@ -1,6 +1,6 @@
 import { fetchPostsApi, createPostApi } from '../api/index'
 import axios from 'axios';
-import { POST_CREATE_FAIL, POST_CREATE_REQUEST, POST_CREATE_SUCCESS, POST_LIST_ADDITION, POST_LIST_FAIL, POST_LIST_REQUEST, POST_LIST_SUCCESS } from '../constants/actionType';
+import { POST_CREATE_FAIL, POST_CREATE_REQUEST, POST_CREATE_SUCCESS, POST_LIST_ADDITION, POST_LIST_FAIL, POST_LIST_REQUEST, POST_LIST_SUCCESS, POST_LIKE_SUCCESS, POST_LIKE_FAIL } from '../constants/actionType';
 import { logout } from './userAction';
 export const getPosts = () => async (dispatch) => {
   const action = { type: 'FETCHALL', payload: [] }
@@ -73,6 +73,25 @@ export const listPosts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: POST_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const likePosts = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.patch(`/api/v1/posts/${ id }`)
+
+    dispatch({
+      type: POST_LIKE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: POST_LIKE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

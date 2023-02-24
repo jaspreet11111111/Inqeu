@@ -7,16 +7,14 @@ import "./styles.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { signin, signup } from '../../actions/auth';
 import { GoogleLogin } from "react-google-login"
-import { LinkedIn } from 'react-linkedin-login-oauth2';
 import GoogleIcon from '@mui/icons-material/Google';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import SignInImage from "../assets/images/Layer 2.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Message from '../elements/Message';
 
 const initialState = {
   username: '',
@@ -33,27 +31,15 @@ const SignupCard = () => {
   const userLogin = useSelector(state => state.userLogin);
   const { loading, error, userInfo } = userRegister;
   const loginError = userLogin.error;
-  console.log(error || loginError)
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+
   const handleSubmit = (e) => {
-    console.log(formData)
     e.preventDefault();
-    if (error || loginError) {
-      toast.error(error || loginError, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      })
-    }
-    else {
-      if ({ IsSignUp } ? (formData.email && formData.password && formData.username && formData.confirmPassword) : (formData.email && formData.password)) {
+    if (IsSignUp) {
+      if ((formData.email && formData.password && formData.username && formData.confirmPassword) && !error) {
         toast.success("OTP sent to your email id", {
           position: "top-center",
           autoClose: 5000,
@@ -65,10 +51,9 @@ const SignupCard = () => {
           theme: "light",
         })
         dispatch(signup(formData, navigate));
-
       }
       else {
-        toast.error('Provide valid information', {
+        toast.error('All fields are required', {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -78,24 +63,28 @@ const SignupCard = () => {
           progress: undefined,
           theme: "light",
         })
+        return;
       }
-      if (!IsSignUp) {
-        toast.success("Login successful", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        dispatch(signin(formData, navigate));
-      }
-
     }
 
-
+    if (!IsSignUp) {
+      if ((formData.email && formData.password) && loginError === null) {
+        dispatch(signin(formData, navigate));
+      }
+      else {
+        toast.error('All fields are required', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        return;
+      }
+    }
   }
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
@@ -137,8 +126,10 @@ const SignupCard = () => {
           }}>
           <Stack className='signinCard_stack'>
             <Typography color='#414141' variant='p' fontSize='20px' fontWeight='700' marginBottom='32px'>
+
               {!IsSignUp ? 'Sign In' : 'Sign Up'}
             </Typography>
+            {(error || loginError) && <Message variant='danger'>{error || loginError} Please reload page and again try to {!IsSignUp ? 'Sign In' : 'Sign Up'}</Message>}
             <form onSubmit={handleSubmit}>
               {IsSignUp && (
                 <Stack
@@ -165,7 +156,6 @@ const SignupCard = () => {
                     aria-label='Username' />
                 </Stack>
               )}
-
               <Stack
                 bgcolor="#ffff"
                 direction="row"
@@ -222,7 +212,6 @@ const SignupCard = () => {
               </Typography>
               {IsSignUp && (
                 <>
-
                   <Stack
                     bgcolor="#ffff"
                     direction="row"
@@ -285,7 +274,6 @@ const SignupCard = () => {
             </Typography>
             <Stack className='otherSigninOption_container'>
               <GoogleLogin
-                // clientId={clientId}
                 render={(renderProps) => (
                   <Button className='signin_option' sx={{
                     color: 'black',
@@ -302,22 +290,6 @@ const SignupCard = () => {
                 onFailure={googleFailure}
                 cookiePolicy='single_host_origin' />
               <Box className='signin_option'>
-                {/* <LinkedIn
-                  clientId="YOUR_CLIENT_ID"
-                  onFailure={error => console.log(error)}
-                  onSuccess={data => console.log(data)}
-                  redirectUri={`http://localhost:3000`}
-                  scope="r_liteprofile r_emailaddress"
-                  renderElement={({ onClick, disabled }) => (
-                    <Button onClick={onClick} disabled={disabled}>
-                      <LinkedInIcon sx={{
-                        color: '#414141',
-                        marginRight: '10px'
-                      }} />
-                      Signin with LinkedIn
-                    </Button>
-                  )}
-                /> */}
               </Box>
             </Stack>
             <Link className='newAccount_link' onClick={switchMode}>
@@ -364,8 +336,6 @@ const SignupCard = () => {
         </Stack>
       </Grid>
     </Grid>
-
-
   )
 }
 

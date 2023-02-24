@@ -39,3 +39,18 @@ exports.createPost = async (req, res) => {
     console.log(err)
   }
 }
+
+exports.likePost = async (req, res) => {
+  const { id } = req.params;
+  const post = await Post.findById(id);
+  const updatedPost = await Post.findByIdAndUpdate(id, {
+    likeCount: post.likeCount + 1
+  }, { new: true })
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      posts: updatedPost
+    }
+  })
+}

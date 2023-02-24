@@ -106,19 +106,6 @@ const Profile = () => {
                   <ShareIcon />
                   Share Profile
                 </Button>
-                {/* <Button variant='outlined'
-                  onClick={deleteHandler}
-                  sx={{
-                    borderColor: "#880ED4",
-                    borderRadius: '2em',
-                    textTransform: 'initial',
-                    color: '#880ED4'
-                  }}>
-                  <DeleteOutlineIcon sx={{
-                    color: '#880ED4'
-                  }} />
-                  Delete Profile
-                </Button> */}
                 <Delete id={userInfo._id} />
               </Stack>
             </Stack>
