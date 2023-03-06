@@ -6,13 +6,16 @@ import '../styles.css';
 
 const History = () => {
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		dispatch(listHistory())
 	}, [])
 
 	const activities = useSelector(state => state.activity);
-	const activity = activities?.activity?.history
+	const loginUser = localStorage.getItem('profile');
+	const userId = JSON.parse(loginUser)._id;
+
+	const filteredActivity = activities?.activity?.history?.filter((item) => item.userId === userId);
+	console.log(filteredActivity);
 
 	return (
 		<>
@@ -24,7 +27,7 @@ const History = () => {
 			}}>
 				Last Activities
 			</Typography>
-			{activity && activity.map((item) => {
+			{filteredActivity && filteredActivity.map((item) => {
 				const date = new Date(item.timestamp);
 				const dateString = date.toLocaleDateString('en-US', {
 					year: 'numeric',

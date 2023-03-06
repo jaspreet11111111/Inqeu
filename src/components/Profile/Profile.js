@@ -25,6 +25,7 @@ const Profile = () => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin;
+  console.log(userInfo._id)
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
 

@@ -82,7 +82,7 @@ export const deleteUser = (id, navigate) => async (dispatch, getState) => {
 		await axios.delete(`/api/v1/user/${ id }`, config)
 
 		dispatch({ type: USER_DELETE_SUCCESS })
-		navigate('/auth');
+		navigate('/signin');
 		localStorage.clear();
 	} catch (error) {
 		console.log(error)
