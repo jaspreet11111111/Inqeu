@@ -43,7 +43,6 @@ const ShareExpDialog = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (userLocal !== null) {
-
 			dispatch(addHistory(historyData))
 			dispatch(createPost(postData));
 			toast.success('Post added successfully', {
@@ -59,7 +58,7 @@ const ShareExpDialog = () => {
 			handleClose();
 		}
 		else {
-			navigate('/auth')
+			navigate('/signin')
 			toast.warning('Please signup or login to add posts', {
 				position: "top-center",
 				autoClose: 5000,

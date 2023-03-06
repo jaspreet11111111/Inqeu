@@ -60,11 +60,11 @@ export const createPost = (postData) => async (dispatch, getState) => {
   }
 }
 
-export const listPosts = () => async (dispatch) => {
+export const listPosts = (keyword = '') => async (dispatch) => {
   try {
     dispatch({ type: POST_LIST_REQUEST })
 
-    const { data } = await axios.get(`/api/v1/posts`)
+    const { data } = await axios.get(`/api/v1/posts?keyword=${ keyword }`)
 
     dispatch({
       type: POST_LIST_SUCCESS,

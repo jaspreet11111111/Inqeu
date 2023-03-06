@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Stack, Typography, Paper, Button, Card } from "@mui/material";
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation, Route } from 'react-router-dom';
 import "./styles.css";
 import MenuIcon from '@mui/icons-material/Menu';
 import Search from './SearchBar/Search';
@@ -59,7 +59,7 @@ const Navbar = () => {
         progress: undefined,
         theme: "light",
       })
-    navigate('/auth');
+    navigate('/signin');
     localStorage.clear()
     setUser(null)
   }
@@ -114,7 +114,7 @@ const Navbar = () => {
             Post
           </NavLink>
         </Typography>
-        <Search activeMenu={activeMenu} />
+        <Search navigate={navigate} />
         <Typography variant='p' fontWeight="500">
           {user ? (
             <Box className='navbar_profile'>
@@ -157,7 +157,7 @@ const Navbar = () => {
           ) : (
             <>
               <Typography variant='p' fontWeight="500">
-                <NavLink to='/auth' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
+                <NavLink to='/signin' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
                   {!isSignedUp ? 'Signin' : 'Signup'}
                 </NavLink>
 
@@ -195,7 +195,7 @@ const Navbar = () => {
                 Post
               </NavLink>
             </Typography>
-            <Search activeMenu={activeMenu} />
+            <Search navigate={navigate} />
             {user ? (
               <Box className='navbar_profile'>
                 <Button onClick={handleShowProfileMenu}>
@@ -236,7 +236,7 @@ const Navbar = () => {
             ) : (
               <>
                 <Typography variant='p' fontWeight="500">
-                  <NavLink to='/auth' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
+                  <NavLink to='/signin' className={({ isActive }) => (isActive ? 'login_btn' : 'signin_btn')}>
                     {!isSignedUp ? 'Signin' : 'Signup'}
                   </NavLink>
                 </Typography>

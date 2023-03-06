@@ -1,24 +1,22 @@
-import { Button, Grid, List, ListItem, Paper, Typography, Stack, CircularProgress } from '@mui/material'
-import React, { useEffect, useContext } from 'react';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Button, Grid, List, Paper, Typography, Stack } from '@mui/material'
+import React, { useEffect } from 'react';
 import './styles.css'
+import { useParams } from 'react-router-dom';
 import PostCards from './PostCards/PostCards';
-// import data from "../../dev-data/postsData"
 import Select from './Select/Select';
 import UserQA from './UserQA/UserQA';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPosts } from '../../actions/posts';
 
 const Post = () => {
+  const { keyword } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listPosts());
-  }, []);
+    dispatch(listPosts(keyword));
+  }, [keyword]);
   let { posts } = useSelector(state => state.postList);
-  // console.log(posts)
   let reversePosts = [...posts].reverse();
   const userData = useSelector(state => state.userLogin);
-  // console.log(userData)
   return (
     <Paper className='post_container'
       sx={{

@@ -47,7 +47,10 @@ function App () {
             <Route path="/post" element={<Post />} />
           </Routes>
           <Routes>
-            <Route path="/auth" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+          <Routes>
+            <Route path="/signin" element={<Signin />} />
           </Routes>
           <Routes>
             <Route path="/profile" element={<Profile />} />

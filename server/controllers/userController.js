@@ -15,17 +15,17 @@ const generateToken = id => {
 }
 
 const signin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
+  console.log('Sigin:', req.body)
   const user = await User.findOne({ email }).select('+password');
-  if (user) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
+  if (!user) {
+    res.status(404).json({
+      message: 'User not found'
     })
+    throw new Error('User not found')
   }
-  if (user && (await user.correctPassword(password))) {
+
+  if (user && !(await user.correctPassword(password, user.password))) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -33,12 +33,12 @@ const signin = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     })
   } else {
-    res.status(401)
-    res.json({
+    res.status(401).json({
       message: 'Invalid email or password'
     })
     throw new Error('Invalid user email or password')
   }
+
 })
 
 
@@ -54,6 +54,9 @@ const signup = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  console.log(hashPassword)
   const user = new User({
     name: username,
     email: email,
@@ -85,12 +88,13 @@ const signup = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user?.email,
-        verified: user?.verified
+        verified: user?.verified,
+        password: hashPassword
       },
       token: generateToken(user._id)
     })
   } else {
-    res.status(400)
+    res.status(401)
     res.json({
       message: 'Invalid user data'
     })
@@ -162,8 +166,6 @@ const resetPassword = async (req, res) => {
     res.status(500).send('Server error');
   }
 }
-
-
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)

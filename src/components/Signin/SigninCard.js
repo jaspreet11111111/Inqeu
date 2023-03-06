@@ -1,15 +1,74 @@
 import { Paper, Grid, Card, Stack, Typography, InputBase, Checkbox, Box, Button } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import React from 'react'
+import React, { useState } from 'react'
 import "./styles.css"
 import { Link } from 'react-router-dom';
+import { signin } from '../../actions/auth';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import SignInImage from "../assets/images/Layer 2.png"
-const SigninCard = () => {
-  const handleSubmit = () => {
+import Message from '../elements/Message';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
+const initialState = {
+  email: '',
+  password: ''
+}
+const SigninCard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState(initialState);
+  const [showPassword, setShowPassword] = useState(false);
+  const userLogin = useSelector(state => state.userLogin);
+  const loginError = userLogin.error;
+  console.log(loginError)
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if ((formData.email && formData.password) && !loginError) {
+      dispatch(signin(formData, navigate));
+    }
+    if (!formData.email && !formData.password) {
+      toast.error('All fields are required', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return;
+    }
+  }
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const googleSuccess = async (res) => {
+    const user = await res?.profileObj
+    const token = res?.tokenId
+
+    try {
+      dispatch({ type: 'AUTH', data: { user, token } });
+      navigate('/')
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+  const googleFailure = (err) => {
+    console.log(err)
+    console.log("Google sign in was unsuccessfull")
   }
   return (
     <Grid container className='signIn_container'>
@@ -28,6 +87,7 @@ const SigninCard = () => {
             <Typography color='#414141' variant='p' fontSize='20px' fontWeight='700' marginBottom='32px'>
               SIGN IN
             </Typography>
+            {loginError && <Message variant='error'>{loginError} <br /> Please reload the page to sigin  </Message>}
             <form onSubmit={handleSubmit}>
               <Stack
                 bgcolor="#ffff"
@@ -43,7 +103,7 @@ const SigninCard = () => {
                   color: '#694ed6',
                   padding: '12px 20px'
                 }} />
-                <InputBase placeholder='Enter your Mail' fullWidth />
+                <InputBase placeholder='Enter your Mail' fullWidth onChange={e => handleChange(e)} name='email' />
               </Stack>
               <Stack
                 bgcolor="#ffff"
@@ -59,7 +119,20 @@ const SigninCard = () => {
                   color: '#694ed6',
                   padding: '12px 20px'
                 }} />
-                <InputBase placeholder='Password' fullWidth type='password' />
+                <InputBase
+                  placeholder='Password'
+                  fullWidth
+                  onChange={e => handleChange(e)}
+                  name='password'
+                  type={showPassword ? 'text' : 'password'} />
+                <Button onClick={handleShowPassword}>
+                  {showPassword ? <VisibilityOffIcon sx={{
+                    color: 'rgba(0, 0, 0, 0.12)'
+                  }} /> : <VisibilityIcon sx={{
+                    color: 'rgba(0, 0, 0, 0.12)'
+                  }}
+                  />}
+                </Button>
               </Stack>
               <Stack
                 direction='row'
@@ -79,7 +152,7 @@ const SigninCard = () => {
                 textTransform: 'initial',
                 borderRadius: '10px',
                 marginTop: '24px'
-              }}>
+              }} type='submit' >
                 Login
               </Button>
             </form>
@@ -93,11 +166,22 @@ const SigninCard = () => {
             </Typography>
             <Stack className='otherSigninOption_container'>
               <Box className='signin_option'>
-                <GoogleIcon sx={{
-                  color: '#414141',
-                  marginRight: '10px'
-                }} />
-                Signin with Google
+                {/* <GoogleLogin
+                  render={(renderProps) => (
+                    <Button className='signin_option' sx={{
+                      color: 'black',
+                      textTransform: 'initial'
+                    }} onClick={renderProps.onClick}>
+                      <GoogleIcon sx={{
+                        color: '#414141',
+                        marginRight: '10px'
+                      }} />
+                      Signin with Google
+                    </Button>
+                  )}
+                  onSuccess={googleSuccess}
+                  onFailure={googleFailure}
+                  cookiePolicy='single_host_origin' /> */}
               </Box>
               <Box className='signin_option'>
                 <LinkedInIcon sx={{

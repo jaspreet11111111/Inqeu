@@ -4,19 +4,26 @@ const asyncHandler = require('express-async-handler')
 
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const keyword = req.query.keyword ? {
+      description: {
+        $regex: req.query.keyword,
+        $options: 'i'
+      }
+    } : {};
+    console.log(keyword)
+    const posts = await Post.find({ ...keyword });
     res.status(200).json({
       status: 'success',
       posts
-    })
-  }
-  catch (err) {
+    });
+  } catch (err) {
     res.status(400).json({
       status: 'Failed',
       message: err
-    })
+    });
   }
-}
+};
+
 
 exports.createPost = async (req, res) => {
   try {

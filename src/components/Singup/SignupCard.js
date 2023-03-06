@@ -5,12 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import "./styles.css"
 import { Link, useNavigate } from 'react-router-dom';
-import { signin, signup } from '../../actions/auth';
-import { GoogleLogin } from "react-google-login"
-import GoogleIcon from '@mui/icons-material/Google';
-import PersonIcon from '@mui/icons-material/Person';
+import { signup } from '../../actions/auth';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import GoogleIcon from '@mui/icons-material/Google';
+import PersonIcon from '@mui/icons-material/Person';
 import SignInImage from "../assets/images/Layer 2.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -38,52 +37,32 @@ const SignupCard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (IsSignUp) {
-      if ((formData.email && formData.password && formData.username && formData.confirmPassword) && !error) {
-        toast.success("OTP sent to your email id", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        dispatch(signup(formData, navigate));
-      }
-      else {
-        toast.error('All fields are required', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        return;
-      }
-    }
 
-    if (!IsSignUp) {
-      if ((formData.email && formData.password) && loginError === null) {
-        dispatch(signin(formData, navigate));
-      }
-      else {
-        toast.error('All fields are required', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        })
-        return;
-      }
+    if ((formData.email && formData.password && formData.username && formData.confirmPassword) && !error) {
+      toast.success("OTP sent to your email id", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      dispatch(signup(formData, navigate));
+    }
+    else {
+      toast.error('All fields are required', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return;
     }
   }
   const [showPassword, setShowPassword] = useState(false);
@@ -126,36 +105,33 @@ const SignupCard = () => {
           }}>
           <Stack className='signinCard_stack'>
             <Typography color='#414141' variant='p' fontSize='20px' fontWeight='700' marginBottom='32px'>
-
-              {!IsSignUp ? 'Sign In' : 'Sign Up'}
+              Sign Up
             </Typography>
-            {(error || loginError) && <Message variant='danger'>{error || loginError} Please reload page and again try to {!IsSignUp ? 'Sign In' : 'Sign Up'}</Message>}
+            {error && <Message variant='danger'>{error} <br />Please reload page and again try to Sign Up</Message>}
             <form onSubmit={handleSubmit}>
-              {IsSignUp && (
-                <Stack
-                  bgcolor="#ffff"
-                  direction="row"
-                  border="1px solid rgba(0, 0, 0, 0.12)"
-                  sx={{
-                    width: '100%',
-                    height: '48px',
-                    borderRadius: '10px',
-                    marginBottom: '24px'
-                  }}>
-                  <PersonIcon sx={{
-                    color: '#880ED4',
-                    padding: '12px 20px'
-                  }} />
-                  <InputBase
-                    placeholder='Username'
-                    name='username'
-                    onChange={e => handleChange(e)}
-                    autoFocus={true}
-                    fullWidth
-                    required={true}
-                    aria-label='Username' />
-                </Stack>
-              )}
+              <Stack
+                bgcolor="#ffff"
+                direction="row"
+                border="1px solid rgba(0, 0, 0, 0.12)"
+                sx={{
+                  width: '100%',
+                  height: '48px',
+                  borderRadius: '10px',
+                  marginBottom: '24px'
+                }}>
+                <PersonIcon sx={{
+                  color: '#880ED4',
+                  padding: '12px 20px'
+                }} />
+                <InputBase
+                  placeholder='Username'
+                  name='username'
+                  onChange={e => handleChange(e)}
+                  autoFocus={true}
+                  fullWidth
+                  required={true}
+                  aria-label='Username' />
+              </Stack>
               <Stack
                 bgcolor="#ffff"
                 direction="row"
@@ -210,35 +186,33 @@ const SignupCard = () => {
               <Typography fontSize='12px' color='red' textAlign='left'>
                 {formData.password.length < 8 ? 'Password must have 8 charecters' : ''}
               </Typography>
-              {IsSignUp && (
-                <>
-                  <Stack
-                    bgcolor="#ffff"
-                    direction="row"
-                    alignItems
-                    border="1px solid rgba(0, 0, 0, 0.12)"
-                    sx={{
-                      width: '100%',
-                      height: '48px',
-                      borderRadius: '10px',
-                      marginTop: '24px'
-                    }}>
-                    <VpnKeyIcon sx={{
-                      color: '#880ED4',
-                      padding: '12px 20px'
-                    }} />
-                    <InputBase
-                      placeholder='Re-enter Password'
-                      fullWidth
-                      onChange={handleChange}
-                      type={showPassword ? 'text' : 'password'}
-                      name='confirmPassword' />
-                  </Stack>
-                  <Typography fontSize='12px' color='red' textAlign='left'>
-                    {(formData.password !== formData.confirmPassword) ? 'Password must be same' : ''}
-                  </Typography>
-                </>
-              )}
+              <>
+                <Stack
+                  bgcolor="#ffff"
+                  direction="row"
+                  alignItems
+                  border="1px solid rgba(0, 0, 0, 0.12)"
+                  sx={{
+                    width: '100%',
+                    height: '48px',
+                    borderRadius: '10px',
+                    marginTop: '24px'
+                  }}>
+                  <VpnKeyIcon sx={{
+                    color: '#880ED4',
+                    padding: '12px 20px'
+                  }} />
+                  <InputBase
+                    placeholder='Re-enter Password'
+                    fullWidth
+                    onChange={handleChange}
+                    type={showPassword ? 'text' : 'password'}
+                    name='confirmPassword' />
+                </Stack>
+                <Typography fontSize='12px' color='red' textAlign='left'>
+                  {(formData.password !== formData.confirmPassword) ? 'Password must be same' : ''}
+                </Typography>
+              </>
               <Stack
                 direction='row'
                 justifyContent='space-between'
@@ -248,9 +222,6 @@ const SignupCard = () => {
                   <input type='checkbox' placeholder='Keep me sign in' />
                   Keep me sign in
                 </Box>
-                <Link className='forgot_link' to='/resetPassword'>
-                  Forgot Password ?
-                </Link>
               </Stack>
               <Button variant='contained' className='loginBtn' sx={{
                 backgroundColor: '#880ED4',
@@ -273,7 +244,7 @@ const SignupCard = () => {
               OR
             </Typography>
             <Stack className='otherSigninOption_container'>
-              <GoogleLogin
+              {/* <GoogleLogin
                 render={(renderProps) => (
                   <Button className='signin_option' sx={{
                     color: 'black',
@@ -288,17 +259,17 @@ const SignupCard = () => {
                 )}
                 onSuccess={googleSuccess}
                 onFailure={googleFailure}
-                cookiePolicy='single_host_origin' />
+                cookiePolicy='single_host_origin' /> */}
               <Box className='signin_option'>
               </Box>
             </Stack>
-            <Link className='newAccount_link' onClick={switchMode}>
+            <Link className='newAccount_link' to='/signin'>
               <Typography color='black' fontFamily='Poppins'>
-                {!IsSignUp ? 'Create new account' : 'Already have an account? '}
+                Already have an account?
               </Typography>
-              <Typography color='#880ED4' fontFamily='Poppins'>{
-                !IsSignUp ? 'New?' : 'Login'
-              }</Typography>
+              <Typography color='#880ED4' fontFamily='Poppins'>
+                Login
+              </Typography>
             </Link>
           </Stack>
         </Card>
