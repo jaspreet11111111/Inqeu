@@ -14,8 +14,8 @@ const mailTransport = () => {
 		service: "gmail",
 		host: 'smtp.gmail.com',
 		auth: {
-			user: process.env.USER,
-			pass: process.env.PASS
+			user: 'maheshwariansh720@gmail.com',
+			pass: 'jbrcfoigwggrluhj'
 		}
 	})
 	return mailSent

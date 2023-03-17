@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // ADD Functions onclick and on change
 const Search = ({ navigate }) => {
   const [keyword, setKeyword] = useState('');
+
   const submitHandler = (e) => {
     console.log('search form');
     console.log(keyword)
@@ -18,7 +19,10 @@ const Search = ({ navigate }) => {
       navigate('/')
     }
   }
-  console.log(keyword)
+
+  const clearSearch = () => {
+    setKeyword('');
+  }
   return (
     <form className='search_form'>
       <Stack
@@ -34,10 +38,11 @@ const Search = ({ navigate }) => {
           <SearchIcon />
         </Button>
         <InputBase placeholder='Type your queries' fullWidth sx={{ border: "none" }} onChange={(e) => setKeyword(e.target.value)} />
-        <CloseIcon sx={{
-          color: '#880ed4',
-          margin: '8px'
-        }} />
+        <Button onClick={clearSearch}>
+          <CloseIcon sx={{
+            color: '#880ed4'
+          }} />
+        </Button>
       </Stack>
     </form>
   )

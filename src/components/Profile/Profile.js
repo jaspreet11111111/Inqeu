@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Delete from './Delete';
 
 const Profile = () => {
-  const [user1, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const userStored = JSON.parse(localStorage.getItem('profile'));
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -107,7 +107,7 @@ const Profile = () => {
                   <ShareIcon />
                   Share Profile
                 </Button>
-                <Delete id={userInfo._id} />
+                <Delete id={userStored._id} />
               </Stack>
             </Stack>
           </Stack>

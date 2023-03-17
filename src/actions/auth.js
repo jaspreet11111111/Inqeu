@@ -13,6 +13,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
       },
     }
     const { data } = await axios.post('/api/v1/user/signin', formData, config)
+    console.log(data)
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
@@ -23,7 +24,13 @@ export const signin = (formData, navigate) => async (dispatch) => {
     })
     localStorage.setItem('profile', JSON.stringify(data));
     localStorage.setItem('token', data.token)
-    navigate('/');
+
+    if (data.isAdmin === true) {
+      navigate('/admin');
+    }
+    else {
+      navigate('/');
+    }
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

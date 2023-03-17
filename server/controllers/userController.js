@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const os = require('os')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
@@ -16,7 +17,6 @@ const generateToken = id => {
 
 const signin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log('Sigin:', req.body)
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
     res.status(404).json({
@@ -25,12 +25,13 @@ const signin = asyncHandler(async (req, res) => {
     throw new Error('User not found')
   }
 
-  if (user && !(await user.correctPassword(password, user.password))) {
+  if (user && (await user.correctPassword(password, user.password))) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
+      isAdmin: user.isAdmin
     })
   } else {
     res.status(401).json({
@@ -38,12 +39,12 @@ const signin = asyncHandler(async (req, res) => {
     })
     throw new Error('Invalid user email or password')
   }
-
 })
 
 
+
 const signup = asyncHandler(async (req, res) => {
-  const { username, email, password, confirmPassword } = req.body
+  const { username, email, password, confirmPassword, isAdmin } = req.body
   let userExists = await User.findOne({ email: email })
 
   if (userExists) {
@@ -56,13 +57,25 @@ const signup = asyncHandler(async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
-  console.log(hashPassword)
+  const networkInterfaces = os.networkInterfaces();
+  let ipAddress;
+
+  Object.keys(networkInterfaces).forEach((interface) => {
+    networkInterfaces[interface].forEach((netInterface) => {
+      // check for IPv4 and not internal network
+      if (netInterface.family === 'IPv4' && !netInterface.internal) {
+        ipAddress = netInterface.address;
+      }
+    });
+  });
+  console.log(ipAddress);
   const user = new User({
     name: username,
     email: email,
-    password: password,
-    confirmPassword: confirmPassword,
-    verified: false
+    password: hashPassword,
+    verified: false,
+    ipAddress: ipAddress,
+    isAdmin: isAdmin
   })
 
   const OTP = generateOtp();
@@ -89,7 +102,9 @@ const signup = asyncHandler(async (req, res) => {
         name: user.name,
         email: user?.email,
         verified: user?.verified,
-        password: hashPassword
+        password: hashPassword,
+        ipAddress: ipAddress,
+        isAdmin: isAdmin
       },
       token: generateToken(user._id)
     })
@@ -344,6 +359,21 @@ const postHistory = async (req, res) => {
   }
 }
 
+const getAllUsers = async (req, res) => {
+  try {
+    const user = await User.find({ isAdmin: false });
+    res.status(200).json({
+      status: 'success',
+      user
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'Failed',
+      message: err
+    });
+  }
+};
+
 
 
 
@@ -355,6 +385,8 @@ module.exports = {
   updateUserProfile,
   getUserProfile,
   forgotPassword,
-  resetPassword, verifyEmail
+  resetPassword,
+  verifyEmail,
+  getAllUsers
 }
 

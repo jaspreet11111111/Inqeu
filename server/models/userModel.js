@@ -22,7 +22,6 @@ const userSchema = mongoose.Schema({
   },
   confirmPassword: {
     type: String,
-    // required: [true, 'Must have password'],
     minlength: 8,
     validate: {
       validator: function(e) {
@@ -34,6 +33,13 @@ const userSchema = mongoose.Schema({
     Date
   },
   verified: {
+    type: Boolean,
+    default: false
+  },
+  ipAddress: {
+    type: String
+  },
+  isAdmin: {
     type: Boolean,
     default: false
   },
@@ -56,7 +62,6 @@ userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
 ) {
-  console.log(candidatePassword, userPassword)
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 

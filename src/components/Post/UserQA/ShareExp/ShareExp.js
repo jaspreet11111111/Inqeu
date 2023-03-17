@@ -13,20 +13,24 @@ const ShareExpDialog = () => {
 	const { userInfo } = useSelector(state => state.userLogin);
 	const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
 	const parsedData = JSON.parse(userLocal);
-	// console.log("local storage", parsedData);
 	const [open, setOpen] = useState(false);
 	const [postData, setPostData] = useState({
 		description: '',
-		username: userInfo?.name
+		username: parsedData?.name,
+		userId: parsedData?._id
 	});
+
 	const [isActive, setIsActive] = useState(false);
 	const dispatch = useDispatch();
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
+
 	const handleClose = () => {
 		setOpen(false);
 	};
+
 	const handleSwitch = () => {
 		setIsActive(!isActive);
 		setOpen(true)
@@ -34,12 +38,10 @@ const ShareExpDialog = () => {
 
 	const [historyData, setHistoryData] = useState({
 		message: 'You added new post',
-		userId: userInfo?._id,
+		userId: parsedData?._id,
 		action: 'added'
-		// postId: ''
 	});
 
-	const postCreate = useSelector((state) => state.postCreated);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (userLocal !== null) {

@@ -4,10 +4,6 @@ const postSchema = mongoose.Schema({
     type: String,
     required: [true, 'Post can not be empty']
   },
-  topic: {
-    type: String,
-    // required: [true, 'A post must have topic']
-  },
   username: {
     type: String,
     required: [true, 'A post must have authorName'],
@@ -24,6 +20,11 @@ const postSchema = mongoose.Schema({
   comments: {
     type: [String],
     default: []
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 })
 

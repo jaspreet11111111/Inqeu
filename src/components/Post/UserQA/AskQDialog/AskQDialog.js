@@ -11,21 +11,29 @@ import { addHistory } from '../../../../actions/history';
 const ShareExpDialog = () => {
   const navigate = useNavigate();
   const { userInfo } = useSelector(state => state.userLogin);
-  const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
   // console.log(userInfo)
+
+  const [userLocal, setUserLocal] = useState(localStorage.getItem('profile'));
+
+  const parsedData = JSON.parse(userLocal);
   const [open, setOpen] = useState(false);
+
   const [postData, setPostData] = useState({
     description: '',
-    username: userInfo?.name
+    username: parsedData?.name,
+    userId: parsedData?._id
   });
+
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleSwitch = () => {
     setIsActive(!isActive);
     setOpen(true)
@@ -35,11 +43,8 @@ const ShareExpDialog = () => {
     message: 'You added new question',
     userId: userInfo?._id,
     action: 'added'
-    // postId: ''
   });
-  console.log(historyData)
-  const postCreate = useSelector((state) => state.postCreated);
-  // console.log(postCreate);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userLocal !== null) {

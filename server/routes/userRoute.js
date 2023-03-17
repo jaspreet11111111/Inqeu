@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { signup, signin, updateUser, deleteUser, updateUserProfile, getUserProfile, forgotPassword, resetPassword, verifyEmail, } = require('../controllers/userController');
+const { signup, signin, updateUser, deleteUser, updateUserProfile, getUserProfile, forgotPassword, resetPassword, verifyEmail, getAllUsers, adminSignin, } = require('../controllers/userController');
 const { protect } = require('../middleware/auth')
+router
+	.route('/')
+	.get(getAllUsers)
+
 router
 	.post('/signin', signin)
 	.post('/signup', signup)

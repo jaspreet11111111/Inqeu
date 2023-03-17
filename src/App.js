@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLayoutEffect } from 'react';
 import EmailVerification from "./components/EmailVerification/EmailVerification";
 import ResetPasswordForm from "./components/ResetForm";
+import Admin from "./components/AdminPannel/Admin";
+import AdminLogin from "./components/AdminPannel/AdminLogin";
 
 const Wrapper = ({ children }) => {
   const location = useLocation();
@@ -63,6 +65,12 @@ function App () {
           </Routes>
           <Routes>
             <Route path="/search/:keyword" element={<Post />} />
+          </Routes>
+          <Routes>
+            <Route path='/adminLogin' element={<AdminLogin />} />
+          </Routes>
+          <Routes>
+            <Route path='/admin' element={<Admin />} />
           </Routes>
         </div>
         <Footer />

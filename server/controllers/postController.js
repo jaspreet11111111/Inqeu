@@ -31,6 +31,7 @@ exports.createPost = async (req, res) => {
     const post = new Post({
       description: req.body.description,
       username: req.body.username,
+      userId: req.body.userId,
       likeCount: 0,
       comments: []
     })
