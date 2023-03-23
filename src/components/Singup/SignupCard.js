@@ -28,17 +28,20 @@ const SignupCard = () => {
   const [formData, setFormData] = useState(initialState);
   const userRegister = useSelector(state => state.userRegister)
   const userLogin = useSelector(state => state.userLogin);
+  const userOtp = useSelector(state => state.otpGen);
   const { loading, error, userInfo } = userRegister;
-  const loginError = userLogin.error;
+  const otpError = userOtp?.error;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  // console.log(otpError)
+  // console.log((formData.email && formData.password && formData.username && formData.confirmPassword) && !otpError)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if ((formData.email && formData.password && formData.username && formData.confirmPassword) && !error) {
+    if ((formData.email && formData.password && formData.username && formData.confirmPassword) && !otpError) {
       toast.success("OTP sent to your email id", {
         position: "top-center",
         autoClose: 5000,
@@ -213,16 +216,6 @@ const SignupCard = () => {
                   {(formData.password !== formData.confirmPassword) ? 'Password must be same' : ''}
                 </Typography>
               </>
-              <Stack
-                direction='row'
-                justifyContent='space-between'
-                marginTop='8px'
-              >
-                <Box className='checkbox_container'>
-                  <input type='checkbox' placeholder='Keep me sign in' />
-                  Keep me sign in
-                </Box>
-              </Stack>
               <Button variant='contained' className='loginBtn' sx={{
                 backgroundColor: '#880ED4',
                 textTransform: 'initial',
@@ -235,14 +228,14 @@ const SignupCard = () => {
               </Button>
               <ToastContainer />
             </form>
-            <Typography
+            {/* <Typography
               fontSize='20px'
               color='#414141'
               fontWeight='400'
               margin='32px 0'
             >
               OR
-            </Typography>
+            </Typography> */}
             <Stack className='otherSigninOption_container'>
               {/* <GoogleLogin
                 render={(renderProps) => (

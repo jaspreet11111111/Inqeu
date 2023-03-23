@@ -5,7 +5,7 @@ export const userOTPReducer = (state = {}, action) => {
 		case USER_OTP_REQUEST:
 			return { loading: true }
 		case USER_OTP_SUCCESS:
-			console.log(action.payload)
+			// console.log(action.payload)
 			return { loading: false, otp: action.payload }
 		case USER_OTP_FAIL:
 			return { loading: false, error: action.payload }

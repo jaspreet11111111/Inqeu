@@ -23,7 +23,7 @@ const AdminLogin = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const userLogin = useSelector(state => state.userLogin);
 	const loginError = userLogin.error;
-	console.log(loginError)
+	// console.log(loginError)
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	}

@@ -1,6 +1,5 @@
 import { Route, Link } from "react-router-dom";
 import { Routes, useLocation } from 'react-router-dom';
-import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./components/About/About";
@@ -9,8 +8,6 @@ import Footer from "./components/Footer/Footer";
 import Profile from "./components/Profile/Profile";
 import Signin from "./components/Signin/Signin";
 import Signup from "./components/Singup/Signup";
-import { getPosts } from "./actions/posts";
-import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLayoutEffect } from 'react';

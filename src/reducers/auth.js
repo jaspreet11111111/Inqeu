@@ -8,7 +8,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH:
       localStorage.setItem('profile', JSON.stringify({ ...action?.data }))
-      console.log(action.payload);
+      // console.log(action.payload);
       return { ...state, user: action.payload, isAuthenticated: true }
 
     case LOGOUT:
@@ -24,7 +24,7 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REGISTER_REQUEST:
       return { loading: true }
     case USER_REGISTER_SUCCESS:
-      console.log(action.payload)
+      // console.log(action.payload)
       return { loading: false, userInfo: action.payload }
     case USER_REGISTER_FAIL:
       return { ...state, loading: false, error: action.payload }
@@ -40,7 +40,7 @@ export const userLoginReducer = (state = {}, action) => {
     case USER_LOGIN_REQUEST:
       return { loading: true }
     case USER_LOGIN_SUCCESS:
-      console.log(action.payload)
+      // console.log(action.payload)
       return { loading: false, userInfo: action.payload }
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload }

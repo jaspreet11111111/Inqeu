@@ -18,7 +18,7 @@ const initialState = {
 }
 const Contact = () => {
   const [formData, setFormData] = useState(initialState);
-  console.log(formData)
+  // console.log(formData)
   const dispatch = useDispatch();
 
   const handleChange = (e) => {

@@ -12,9 +12,9 @@ export const generateOtp = (formData, navigate) => async (dispatch, getState) =>
 				'Content-Type': 'application/json',
 			},
 		}
-		console.log('form dara', formData)
+		// console.log('form dara', formData)
 		const { data } = await axios.post('/api/v1/user/verify-email', formData, config);
-		console.log("actionwalalOTP", data)
+		// console.log("actionwalalOTP", data)
 
 		dispatch({
 			type: USER_OTP_SUCCESS,

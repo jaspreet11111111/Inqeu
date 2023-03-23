@@ -36,7 +36,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 			userLogin: { userInfo },
 		} = getState()
 
-		console.log("authwalasuer:", userInfo.token)
+		// console.log("authwalasuer:", userInfo.token)
 
 		const config = {
 			headers: {
@@ -46,7 +46,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 		}
 
 		const { data } = await axios.get(`/api/v1/user/${ id }`, config);
-		console.log(data)
+		// console.log(data)
 
 		dispatch({
 			type: USER_DETAILS_SUCCESS,
@@ -195,7 +195,7 @@ export const listUsers = () => async (dispatch, getState) => {
 			},
 		}
 
-		console.log(userInfo?.token)
+		// console.log(userInfo?.token)
 		const { data } = await axios.get(`/api/v1/user`, config)
 		dispatch({
 			type: USER_LIST_SUCCESS,

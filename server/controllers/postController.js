@@ -10,7 +10,7 @@ exports.getAllPosts = async (req, res) => {
         $options: 'i'
       }
     } : {};
-    console.log(keyword)
+    // console.log(keyword)
     const posts = await Post.find({ ...keyword });
     res.status(200).json({
       status: 'success',
@@ -27,7 +27,7 @@ exports.getAllPosts = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    console.log(req.user)
+    // console.log(req.user)
     const post = new Post({
       description: req.body.description,
       username: req.body.username,
@@ -35,7 +35,6 @@ exports.createPost = async (req, res) => {
       likeCount: 0,
       comments: []
     })
-
     const createdPost = await post.save()
     res.status(201).json({
       status: 'success',
@@ -44,7 +43,10 @@ exports.createPost = async (req, res) => {
       }
     })
   } catch (err) {
-    console.log(err)
+    res.status(400).json({
+      status: 'Failed',
+      message: err
+    });
   }
 }
 

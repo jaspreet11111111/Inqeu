@@ -18,9 +18,9 @@ const Navbar = () => {
   const [screenSize, setScreenSize] = useState(undefined);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  console.log(showProfileMenu)
-  console.log("user:", user)
-  console.log(user)
+  // console.log(showProfileMenu)
+  // console.log("user:", user)
+  // console.log(user)
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 

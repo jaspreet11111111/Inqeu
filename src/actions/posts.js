@@ -7,10 +7,10 @@ export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await fetchPostsApi();
     dispatch({ type: 'FETCHALL', payload: data })
-    console.log(data)
+    // console.log(data)
   }
   catch (err) {
-    console.log(err);
+    // console.log(err);
   }
   dispatch(action);
 }
@@ -25,7 +25,7 @@ export const createPost = (postData) => async (dispatch, getState) => {
       userLogin: { userInfo }
     } = getState()
 
-    console.log("postactionwala:", userInfo)
+    // console.log("postactionwala:", userInfo)
 
     const config = {
       headers: {
@@ -34,7 +34,7 @@ export const createPost = (postData) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.post(`/api/v1/posts`, postData, config);
-    console.log("postWalaData:", data)
+    // console.log("postWalaData:", data)
 
     dispatch({
       type: POST_LIST_ADDITION,
@@ -56,7 +56,7 @@ export const createPost = (postData) => async (dispatch, getState) => {
       type: POST_CREATE_FAIL,
       payload: message,
     })
-    console.log(error)
+    // console.log(error)
   }
 }
 

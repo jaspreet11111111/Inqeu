@@ -5,7 +5,7 @@ export const listHistory = () => async (dispatch) => {
 		dispatch({ type: 'FETCH_HISTORY_REQUEST' })
 
 		const { data } = await axios.get(`/api/v1/history`);
-		console.log(data)
+		// console.log(data)
 
 		dispatch({
 			type: 'FETCH_HISTORY_SUCCESS',
@@ -26,7 +26,7 @@ export const addHistory = (historyData) => async (dispatch) => {
 	try {
 		dispatch({ type: 'ADD_HISTORY_REQUEST' })
 		const { data } = await axios.post(`/api/v1/history/added`, historyData)
-		console.log(historyData)
+		// console.log(historyData)
 		dispatch({
 			type: 'ADD_HISTORY_SUCCESS',
 			payload: data,
@@ -46,7 +46,7 @@ export const addLikeHistory = (historyData) => async (dispatch) => {
 	try {
 		dispatch({ type: 'ADD_HISTORY_REQUEST' })
 		const { data } = await axios.post(`/api/v1/history/liked`, historyData)
-		console.log(historyData)
+		// console.log(historyData)
 		dispatch({
 			type: 'ADD_HISTORY_SUCCESS',
 			payload: data,

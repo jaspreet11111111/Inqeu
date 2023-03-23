@@ -18,7 +18,7 @@ router
 router
 	.route('/profile')
 	.get(protect, getUserProfile)
-	.put(protect, updateUserProfile);
+	.put(protect, updateUserProfile)
 
 router
 	.route('/:id')

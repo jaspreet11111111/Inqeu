@@ -26,7 +26,7 @@ const SigninCard = () => {
   const [showPassword, setShowPassword] = useState(false);
   const userLogin = useSelector(state => state.userLogin);
   const loginError = userLogin.error;
-  console.log(loginError)
+  // console.log(loginError)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -63,7 +63,7 @@ const SigninCard = () => {
       navigate('/')
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }
   const googleFailure = (err) => {
@@ -139,13 +139,13 @@ const SigninCard = () => {
                 justifyContent='space-between'
                 marginTop='8px'
               >
-                <Box className='checkbox_container'>
+                {/* <Box className='checkbox_container'>
                   <input type='checkbox' placeholder='Keep me sign in' />
                   Keep me sign in
                 </Box>
-                <Link className='forgot_link'>
+                <Link className='forgot_link' to='/resetPassword'>
                   Forgot Password ?
-                </Link>
+                </Link> */}
               </Stack>
               <Button variant='contained' className='loginBtn' sx={{
                 backgroundColor: '#880ED4',
@@ -156,17 +156,17 @@ const SigninCard = () => {
                 Login
               </Button>
             </form>
-            <Typography
+            {/* <Typography
               fontSize='20px'
               color='#414141'
               fontWeight='400'
               margin='32px 0'
             >
               OR
-            </Typography>
+            </Typography> */}
             <Stack className='otherSigninOption_container'>
-              <Box className='signin_option'>
-                {/* <GoogleLogin
+              {/* <Box className='signin_option'>
+                <GoogleLogin
                   render={(renderProps) => (
                     <Button className='signin_option' sx={{
                       color: 'black',
@@ -181,15 +181,15 @@ const SigninCard = () => {
                   )}
                   onSuccess={googleSuccess}
                   onFailure={googleFailure}
-                  cookiePolicy='single_host_origin' /> */}
-              </Box>
-              <Box className='signin_option'>
+                  cookiePolicy='single_host_origin' />
+              </Box> */}
+              {/* <Box className='signin_option'>
                 <LinkedInIcon sx={{
                   color: '#414141',
                   marginRight: '10px'
                 }} />
                 Signin with LinkedIn
-              </Box>
+              </Box> */}
             </Stack>
             <Link className='newAccount_link' to='/signup'>
               <Typography color='#880ED4' fontFamily='Poppins'>New?</Typography>

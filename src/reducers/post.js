@@ -25,7 +25,7 @@ export const postListReducer = (state = { posts: [] }, action) => {
       return { loading: false, error: action.payload }
 
     case POST_LIST_ADDITION:
-      console.log(action.payload.posts)
+      // console.log(action.payload.posts)
       return { posts: [...state.posts, action.payload.data.posts] }
 
     case POST_LIKE_SUCCESS:

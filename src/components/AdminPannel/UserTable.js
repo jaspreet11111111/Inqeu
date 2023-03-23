@@ -16,7 +16,7 @@ function UserTable () {
 		axios.get('/api/v1/user')
 			.then(response => {
 				setData(response.data.user);
-				console.log(response)
+				// console.log(response)
 			})
 			.catch(error => {
 				console.log(error);
@@ -24,7 +24,7 @@ function UserTable () {
 	}, []);
 
 	const userList = useSelector(state => state.userList);
-	console.log(data);
+	// console.log(data);
 	return (
 		<TableContainer component={Paper}>
 			<Table>

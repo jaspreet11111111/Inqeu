@@ -13,7 +13,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
       },
     }
     const { data } = await axios.post('/api/v1/user/signin', formData, config)
-    console.log(data)
+    // console.log(data)
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
@@ -54,19 +54,19 @@ export const signup = (formData, navigate) => async (dispatch) => {
       },
     }
     const { data } = await axios.post('/api/v1/user/signup', formData, config);
-    console.log("authwalSignup", data)
+    // console.log("authwalSignup", data)
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
     })
-    console.log(data)
+    // console.log(data)
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
     })
     navigate('/verify');
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:

@@ -12,7 +12,7 @@ const historyReducer = (state = initialState, action) => {
 				loading: true
 			};
 		case 'FETCH_HISTORY_SUCCESS':
-			console.log(action.payload)
+			// console.log(action.payload)
 			return {
 				loading: false,
 				activity: action.payload,

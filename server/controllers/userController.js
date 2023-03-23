@@ -68,7 +68,7 @@ const signup = asyncHandler(async (req, res) => {
       }
     });
   });
-  console.log(ipAddress);
+  // console.log(ipAddress);
   const user = new User({
     name: username,
     email: email,
@@ -184,7 +184,7 @@ const resetPassword = async (req, res) => {
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
-  console.log(req)
+  // console.log(req)
   if (user) {
     res.json({
       _id: user._id,
@@ -291,7 +291,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   const { otp, userId } = req.body;
-  console.log(req.body)
+  // console.log(req.body)
   if (!userId || !otp.trim()) {
     res.status(400).json({
       message: 'Invalid'

@@ -9,8 +9,8 @@ const Search = ({ navigate }) => {
   const [keyword, setKeyword] = useState('');
 
   const submitHandler = (e) => {
-    console.log('search form');
-    console.log(keyword)
+    // console.log('search form');
+    // console.log(keyword)
     e.preventDefault();
     if (keyword.trim()) {
       navigate(`/search/${ keyword }`)
